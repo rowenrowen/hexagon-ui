@@ -22,11 +22,11 @@ import { GUMROAD_CHECKOUT_URL } from "@/lib/checkout-url";
 export const metadata: Metadata = {
   title: "Pricing",
   description:
-    "Hexagon UI license — one-time purchase, ZIP download, README + HANDOFF, commercial terms via Gumroad.",
+    "Hexagon UI license: one-time purchase, ZIP download, README plus HANDOFF, commercial terms via Gumroad.",
 };
 
 const includedBodyForSections =
-  "Heroes, proof strips, pricing patterns, FAQ, motion polish — composed like a premium block library.";
+  "Heroes, proof strips, pricing patterns, FAQ, and motion polish, composed like a premium block library.";
 
 function IncludedGrid({ sectionCount }: { sectionCount: number }) {
   const tiles = [
@@ -38,7 +38,7 @@ function IncludedGrid({ sectionCount }: { sectionCount: number }) {
     {
       icon: Code2,
       title: "Paste-ready React + Tailwind",
-      body: "Real components, not screenshots — tune copy and tokens without fighting ad-hoc markup.",
+      body: "Real components, not screenshots. Tune copy and tokens without fighting ad-hoc markup.",
     },
     {
       icon: Palette,
@@ -53,7 +53,7 @@ function IncludedGrid({ sectionCount }: { sectionCount: number }) {
     {
       icon: RefreshCw,
       title: "v1.x maintenance drops",
-      body: "Re-fetch the archive while v1.x is actively maintained — major future packs may be separate SKUs.",
+      body: "Re-fetch the archive while v1.x is actively maintained. Major future packs may be separate SKUs.",
     },
     {
       icon: ShieldCheck,
@@ -90,7 +90,7 @@ export default function PricingPage() {
           title="Stop rebuilding the same marketing UI from scratch"
           description={
             <>
-              One checkout unlocks production-ready sections your team can paste into Next.js or Vite. No subscription traps —
+              One checkout unlocks production-ready sections your team can paste into Next.js or Vite. No subscription traps:
               just a ZIP, documentation, and clear commercial terms on Gumroad.
             </>
           }
@@ -120,7 +120,7 @@ export default function PricingPage() {
                 A deliberate trade for shipping teams
               </h2>
               <p className="mt-4 text-sm leading-relaxed text-muted-foreground sm:text-[15px]">
-                Hexagon UI isn&apos;t another abstract component kit — it&apos;s finished narrative density you can drop into a page,
+                Hexagon UI isn&apos;t another abstract component kit. It&apos;s finished narrative density you can drop into a page,
                 then refine. Compare the two paths your calendar actually feels.
               </p>
             </div>
@@ -138,7 +138,7 @@ export default function PricingPage() {
                   </li>
                   <li className="flex gap-3">
                     <span className="mt-2 size-1 shrink-0 rounded-full bg-muted-foreground/40" aria-hidden />
-                    Motion and accessibility polish arrive late — if they arrive at all — because velocity eats runway.
+                    Motion and accessibility polish arrive late, if they arrive at all, because velocity eats runway.
                   </li>
                   <li className="flex gap-3">
                     <span className="mt-2 size-1 shrink-0 rounded-full bg-muted-foreground/40" aria-hidden />
@@ -155,7 +155,7 @@ export default function PricingPage() {
                 <ul className="mt-6 space-y-4 text-sm leading-relaxed text-card-foreground">
                   <li className="flex gap-3">
                     <span className="mt-2 size-1 shrink-0 rounded-full bg-primary/70" aria-hidden />
-                    Drop curated sections that already read like a mature SaaS marketing site — then tune tokens once.
+                    Drop curated sections that already read like a mature SaaS marketing site, then tune tokens once.
                   </li>
                   <li className="flex gap-3">
                     <span className="mt-2 size-1 shrink-0 rounded-full bg-primary/70" aria-hidden />
@@ -163,14 +163,14 @@ export default function PricingPage() {
                   </li>
                   <li className="flex gap-3">
                     <span className="mt-2 size-1 shrink-0 rounded-full bg-primary/70" aria-hidden />
-                    Procurement sees a single SKU, engineers see filenames that match the `/blocks` hub — alignment without slack threads.
+                    Procurement sees a single SKU, engineers see filenames that match the `/blocks` hub: alignment without slack threads.
                   </li>
                 </ul>
               </div>
             </div>
 
             <p className="mx-auto mt-10 max-w-3xl text-center text-xs leading-relaxed text-muted-foreground">
-              Illustrative comparison — your mileage varies by team size and design maturity. The license stays one-time regardless of how many sections you ultimately ship.
+              Illustrative comparison; your mileage varies by team size and design maturity. The license stays one-time regardless of how many sections you ultimately ship.
             </p>
           </MarketingContainer>
         </section>
@@ -180,7 +180,7 @@ export default function PricingPage() {
             <div className="mx-auto max-w-2xl text-center">
               <h2 className="text-2xl font-semibold tracking-tight text-foreground sm:text-3xl">Everything in one archive</h2>
               <p className="mt-4 text-sm leading-relaxed text-muted-foreground sm:text-[15px]">
-                No tiers to negotiate — the checkout covers the sections we showcase publicly plus the shared token file and handoff docs.
+                No tiers to negotiate. The checkout covers the sections we showcase publicly plus the shared token file and handoff docs.
               </p>
             </div>
 
@@ -191,7 +191,7 @@ export default function PricingPage() {
               <Link href="/kit" className="font-semibold text-foreground underline-offset-4 hover:underline">
                 Open the kit index
               </Link>{" "}
-              — filenames mirror each preview on `/blocks`.
+              Filenames mirror each preview on `/blocks`.
             </div>
           </MarketingContainer>
         </section>

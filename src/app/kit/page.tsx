@@ -9,7 +9,8 @@ import { hexagonFooterLinks } from "@/content/hexagon-landing";
 
 export const metadata: Metadata = {
   title: "Kit & ZIP",
-  description: "What ships in the Hexagon UI Gumroad download — file list, packaging, and how to audit the archive.",
+  description:
+    "What ships in the Hexagon UI Gumroad download: file list, packaging, and how to audit the archive.",
 };
 
 export default function KitPage() {
@@ -24,7 +25,7 @@ export default function KitPage() {
             <>
               Buyers get the same{" "}
               <code className="rounded-md bg-muted/80 px-1.5 py-0.5 font-mono text-[15px] text-foreground">blocks/</code>{" "}
-              source mirrored on the live hub. Use this manifest for procurement or engineering review — filenames match each preview toolbar path.
+              source mirrored on the live hub. Use this manifest for procurement or engineering review; filenames match each preview toolbar path.
             </>
           }
           actions={

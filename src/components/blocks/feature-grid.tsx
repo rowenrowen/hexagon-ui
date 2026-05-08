@@ -81,7 +81,7 @@ export function FeatureGrid({
       <MarketingContainer>
         <h2 className="text-2xl font-semibold tracking-tight text-foreground sm:text-3xl">{title}</h2>
         <p className="mt-3 max-w-2xl text-muted-foreground">{subtitle}</p>
-        <ul className="mt-12 grid list-none gap-6 sm:grid-cols-2">
+        <ul className="mt-12 grid list-none gap-4 sm:grid-cols-2 sm:gap-6">
           {items.map(({ icon: iconId, title: t, body }) => {
             const Icon = FEATURE_GRID_ICONS[iconId];
             return (

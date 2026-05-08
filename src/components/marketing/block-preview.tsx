@@ -90,7 +90,17 @@ export function BlockPreview({ slug }: { slug: string }) {
     case "stats-inline-row":
       return <StatsInlineRow />;
     case "stats-big":
-      return <StatsBig />;
+      return (
+        <StatsBig
+          value="280 ms"
+          label="Median first meaningful paint after swapping in Hexagon sections"
+          supporting="Synthetic lab trace on a mid-tier laptop: marketing shell + hero + pricing + FAQ, styled with kit tokens and reduced-motion-safe defaults."
+          chips={[
+            { label: "Lighthouse perf", value: "High 90s (lab)" },
+            { label: "Editor experience", value: "Copy in minutes" },
+          ]}
+        />
+      );
     case "press-strip":
       return <PressStrip />;
     case "partner-logo-grid":

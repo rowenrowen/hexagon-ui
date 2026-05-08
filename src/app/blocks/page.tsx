@@ -15,7 +15,7 @@ import { hexagonFooterLinks } from "@/content/hexagon-landing";
 export const metadata: Metadata = {
   title: "Blocks",
   description:
-    "Production-ready React marketing sections — browse by category, switch preview palettes, copy real source files from the ZIP.",
+    "Production-ready React marketing sections: browse by category, switch preview palettes, and copy real source files from the ZIP.",
 };
 
 export default function BlocksPage() {
@@ -25,7 +25,7 @@ export default function BlocksPage() {
       <main className="flex flex-1 flex-col">
         <MarketingPageHero
           eyebrow="Blocks"
-          title={`${BLOCK_COUNT} production sections — browse, theme, ship`}
+          title={`${BLOCK_COUNT} production sections for browsing, theming, and shipping`}
           description={
             <>
               Paste-ready React + Tailwind with motion where it earns attention. Use{" "}

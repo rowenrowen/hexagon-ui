@@ -9,12 +9,14 @@ import {
   FaqAccordion,
   FooterSimple,
 } from "@/components/blocks";
+import { HomeFeaturedBlocks } from "@/components/marketing/home-featured-blocks";
 import { HomeNextSteps } from "@/components/marketing/home-next-steps";
 import {
   hexagonFeatures,
   hexagonFooterLinks,
   hexagonHero,
   hexagonFaq,
+  hexagonHomeSocialProof,
   hexagonPricingBullets,
 } from "@/content/hexagon-landing";
 import { GUMROAD_CHECKOUT_URL } from "@/lib/checkout-url";
@@ -33,11 +35,12 @@ export default function Home() {
           <TrustStrip />
           <FeatureGrid
             title="Built for speed and clarity"
-            subtitle="Opinionated enough to look finished on day one; structured so engineers aren't fighting ad-hoc markup."
+            subtitle="Opinionated enough to look finished on day one, and structured so engineers are not fighting ad-hoc markup."
             items={hexagonFeatures}
             id="product"
           />
-          <SocialProofQuote />
+          <HomeFeaturedBlocks />
+          <SocialProofQuote {...hexagonHomeSocialProof} />
           <PricingSingle
             checkoutHref={GUMROAD_CHECKOUT_URL}
             eyebrow="Hexagon UI · v1"

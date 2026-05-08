@@ -3,6 +3,10 @@ import { MarketingContainer } from "@/components/layout/marketing-container";
 import { BlockReveal } from "./block-reveal";
 
 export type SocialProofQuoteProps = {
+  /** Optional section chrome for marketing pages (e.g. homepage). */
+  eyebrow?: string;
+  title?: string;
+  intro?: string;
   quote: string;
   trustLine?: string;
   avatarCount?: number;
@@ -24,6 +28,17 @@ export function SocialProofQuote(props: Partial<SocialProofQuoteProps> = {}) {
   return (
     <section className={`border-y border-border bg-muted/15 py-16 ${p.className ?? ""}`}>
       <MarketingContainer>
+        {p.title || p.intro || p.eyebrow ? (
+          <div className="mb-8 max-w-2xl">
+            {p.eyebrow ? (
+              <p className="text-xs font-semibold uppercase tracking-[0.14em] text-primary">{p.eyebrow}</p>
+            ) : null}
+            {p.title ? (
+              <h2 className="mt-2 text-2xl font-semibold tracking-tight text-foreground sm:text-3xl">{p.title}</h2>
+            ) : null}
+            {p.intro ? <p className="mt-3 text-sm leading-relaxed text-muted-foreground sm:text-[15px]">{p.intro}</p> : null}
+          </div>
+        ) : null}
         <BlockReveal className="max-w-2xl">
           <div className="rounded-2xl border border-border/90 bg-card p-6 shadow-lg shadow-black/20 ring-1 ring-white/[0.04] sm:p-8">
             <div className="flex items-center justify-between gap-3">

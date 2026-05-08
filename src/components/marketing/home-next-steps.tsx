@@ -18,13 +18,13 @@ const cards = [
   {
     href: "/pricing",
     title: "Pricing",
-    body: "One SKU, Gumroad checkout, VAT at payment — dedicated page with the license card.",
+    body: "One SKU, Gumroad checkout, and VAT at payment, with a dedicated license page.",
     icon: CreditCard,
   },
   {
     href: "/#faq",
     title: "FAQ",
-    body: "Stack, theming, updates, and what’s in v1 — answered on the homepage (no duplicate route).",
+    body: "Stack, theming, updates, and what is in v1 are answered on the homepage (no duplicate route).",
     icon: HelpCircle,
   },
 ] as const;
@@ -35,9 +35,9 @@ export function HomeNextSteps() {
       <MarketingContainer>
         <h2 className="text-2xl font-semibold tracking-tight text-foreground sm:text-3xl">Explore the product</h2>
         <p className="mt-3 max-w-2xl text-muted-foreground">
-          Start on the landing story, open the blocks hub, then pricing and FAQ as full pages when you are ready.
+          Start with the homepage narrative, then use the blocks hub, pricing, and FAQ pages for deeper review.
         </p>
-        <ul className="mt-12 grid gap-6 sm:grid-cols-2">
+        <ul className="mt-12 grid gap-4 sm:grid-cols-2 sm:gap-6">
           {cards.map(({ href, title, body, icon: Icon }) => (
             <li key={href}>
               <Link

@@ -6,15 +6,8 @@ import { Hexagon, Search } from "lucide-react";
 import { useState } from "react";
 import { CommandMenu } from "@/components/command-menu";
 import { MobileNav } from "@/components/mobile-nav";
-import { ThemeToggle } from "@/components/theme-toggle";
-
-/** Flat primary links — homepage carries FAQ; keep top nav minimal (similar rhythm to shadcn.io). */
-const navLinks = [
-  { href: "/blocks", label: "Blocks" },
-  { href: "/kit", label: "Kit" },
-  { href: "/pricing", label: "Pricing" },
-  { href: "/handoff", label: "Guide" },
-];
+import { HEADER_SURFACE_BTN_CLASSES, ThemeToggle } from "@/components/theme-toggle";
+import { SITE_PRIMARY_NAV } from "@/content/site-nav";
 
 function linkActive(pathname: string, href: string) {
   return pathname === href || pathname.startsWith(`${href}/`);
@@ -47,7 +40,7 @@ export function SiteHeader() {
           </Link>
 
           <nav className="hidden flex-1 items-center gap-0.5 pl-2 md:flex" aria-label="Primary">
-            {navLinks.map((item) => {
+            {SITE_PRIMARY_NAV.map((item) => {
               const active = linkActive(pathname, item.href);
               return (
                 <Link
@@ -62,7 +55,7 @@ export function SiteHeader() {
             })}
           </nav>
 
-          <div className="ml-auto flex shrink-0 items-center gap-1 sm:gap-2">
+          <div className="ml-auto flex shrink-0 items-center gap-1.5 sm:gap-2">
             <button
               type="button"
               onClick={() => setCommandOpen(true)}
@@ -86,7 +79,7 @@ export function SiteHeader() {
 
             <Link
               href="/pricing"
-              className="rounded-full bg-primary px-3 py-2 text-sm font-semibold text-primary-foreground transition-opacity hover:opacity-90 sm:px-4"
+              className="inline-flex h-9 shrink-0 items-center justify-center rounded-lg bg-primary px-3.5 text-sm font-semibold text-primary-foreground shadow-sm transition-[opacity,transform] hover:opacity-92 active:scale-[0.97] sm:px-4"
             >
               Buy
             </Link>
@@ -95,6 +88,7 @@ export function SiteHeader() {
               open={mobileOpen}
               onOpenChange={setMobileOpen}
               onOpenSearch={() => setCommandOpen(true)}
+              triggerClassName={HEADER_SURFACE_BTN_CLASSES}
             />
           </div>
         </div>

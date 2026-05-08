@@ -50,7 +50,7 @@ const steps = [
         <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Email you can paste</p>
         <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
           We purchased Hexagon UI (React + Tailwind marketing blocks). ZIP includes README + HANDOFF and a{" "}
-          <code className="font-mono text-xs">blocks/</code> directory—please integrate and map CSS variables to our theme. Receipt attached for license questions.
+          <code className="font-mono text-xs">blocks/</code> directory. Please integrate and map CSS variables to our theme. Receipt attached for license questions.
         </p>
       </div>
     ),
@@ -87,7 +87,7 @@ const steps = [
         <Link href="/kit" className="font-semibold text-foreground underline-offset-4 hover:underline">
           kit manifest
         </Link>{" "}
-        if they need filenames — each preview toolbar lists the matching <span className="font-mono text-xs">blocks/*.tsx</span> path.
+        if they need filenames. Each preview toolbar lists the matching <span className="font-mono text-xs">blocks/*.tsx</span> path.
       </>
     ),
   },
@@ -104,8 +104,8 @@ export default function HandoffPage() {
           description={
             <>
               The same narrative as{" "}
-              <code className="rounded-md bg-muted/80 px-1.5 py-0.5 font-mono text-[15px] text-foreground">HANDOFF.md</code> in your ZIP —
-              optimized for scanning in the browser before you forward links to procurement or engineering.
+              <code className="rounded-md bg-muted/80 px-1.5 py-0.5 font-mono text-[15px] text-foreground">HANDOFF.md</code>{" "}
+              in your ZIP, optimized for scanning in the browser before you forward links to procurement or engineering.
             </>
           }
           actions={
@@ -154,7 +154,7 @@ export default function HandoffPage() {
           <div className="mx-auto mt-14 max-w-3xl rounded-2xl border border-border bg-muted/15 px-6 py-6 text-center sm:px-10">
             <p className="text-sm leading-relaxed text-muted-foreground">
               <strong className="text-foreground">Support:</strong> use the channel printed on your Gumroad receipt or product page.
-              License language lives on Gumroad at checkout — forward it to legal instead of retyping terms.
+              License language lives on Gumroad at checkout; forward it to legal instead of retyping terms.
             </p>
           </div>
         </MarketingContainer>
