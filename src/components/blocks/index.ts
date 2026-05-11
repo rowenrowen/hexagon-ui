@@ -101,6 +101,24 @@ export {
   type NavMarketingProps,
 } from "./nav-marketing";
 export {
+  NavCentered,
+  navCenteredDefaults,
+  type NavCenteredLink,
+  type NavCenteredProps,
+} from "./nav-centered";
+export {
+  NavPill,
+  navPillDefaults,
+  type NavPillLink,
+  type NavPillProps,
+} from "./nav-pill";
+export {
+  NavSearch,
+  navSearchDefaults,
+  type NavSearchLink,
+  type NavSearchProps,
+} from "./nav-search";
+export {
   ContactSection,
   contactSectionDefaults,
   type ContactSectionProps,

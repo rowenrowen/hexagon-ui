@@ -3,6 +3,7 @@ import { ArrowRight, Layers } from "lucide-react";
 import { MarketingContainer } from "@/components/layout/marketing-container";
 import { BLOCK_COUNT } from "@/content/blocks-catalog";
 import { getHomeFeaturedBlocks } from "@/content/home-featured-blocks";
+import { SITE_PRIMARY_PURCHASE_CLASSES } from "@/lib/site-cta";
 
 export function HomeFeaturedBlocks() {
   const featured = getHomeFeaturedBlocks();
@@ -45,10 +46,7 @@ export function HomeFeaturedBlocks() {
         </ul>
 
         <div className="mt-10 flex justify-center border-t border-dashed border-border/80 pt-10">
-          <Link
-            href="/blocks"
-            className="inline-flex items-center justify-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground shadow-sm transition-opacity hover:opacity-92"
-          >
+          <Link href="/blocks" className={`${SITE_PRIMARY_PURCHASE_CLASSES} items-center gap-2`}>
             Explore all {BLOCK_COUNT} blocks
             <ArrowRight className="size-4 opacity-90" aria-hidden />
           </Link>

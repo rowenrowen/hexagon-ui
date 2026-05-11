@@ -1,0 +1,109 @@
+import type { Metadata } from "next";
+import Link from "next/link";
+import { notFound } from "next/navigation";
+import { ArrowLeft, ArrowRight } from "lucide-react";
+import { CategorySection } from "@/components/marketing/category-section";
+import { BLOCK_SECTIONS } from "@/content/blocks-catalog";
+import { SITE_PRIMARY_PURCHASE_CLASSES, SITE_SECONDARY_OUTLINE_CLASSES } from "@/lib/site-cta";
+
+type Params = { category: string };
+
+export function generateStaticParams(): Params[] {
+  return BLOCK_SECTIONS.map((s) => ({ category: s.slug }));
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<Params>;
+}): Promise<Metadata> {
+  const { category } = await params;
+  const section = BLOCK_SECTIONS.find((s) => s.slug === category);
+  if (!section) return {};
+  return {
+    title: `${section.title} blocks`,
+    description: `${section.description} ${section.blocks.length} variants in Hexagon UI.`,
+  };
+}
+
+export default async function BlocksCategoryPage({
+  params,
+}: {
+  params: Promise<Params>;
+}) {
+  const { category } = await params;
+  const section = BLOCK_SECTIONS.find((s) => s.slug === category);
+  if (!section) notFound();
+
+  const idx = BLOCK_SECTIONS.findIndex((s) => s.slug === section.slug);
+  const previous = idx > 0 ? BLOCK_SECTIONS[idx - 1] : null;
+  const next = idx < BLOCK_SECTIONS.length - 1 ? BLOCK_SECTIONS[idx + 1] : null;
+
+  return (
+    <>
+      <header className="mb-6 flex flex-col gap-5 border-b border-border/60 pb-6 sm:mb-8 sm:pb-8">
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+          <div className="max-w-2xl">
+            <h1 className="text-balance text-3xl font-semibold tracking-tight text-foreground sm:text-4xl">{section.title}</h1>
+            <p className="mt-3 text-pretty text-base leading-relaxed text-muted-foreground">{section.description}</p>
+          </div>
+          <div className="flex shrink-0 flex-wrap gap-2">
+            <Link href="/pricing" className={SITE_PRIMARY_PURCHASE_CLASSES}>
+              Get full access
+            </Link>
+            <Link href="/kit" className={SITE_SECONDARY_OUTLINE_CLASSES}>
+              Kit manifest
+              <ArrowRight className="size-4 opacity-70" aria-hidden />
+            </Link>
+          </div>
+        </div>
+      </header>
+
+      <div className="preview-canvas relative -mx-4 bg-gradient-to-b from-muted/20 via-transparent to-transparent px-0 pb-12 pt-2 sm:-mx-6 lg:mx-0 dark:from-muted/15">
+        <CategorySection section={section} />
+      </div>
+
+      <nav
+        className="mt-2 flex flex-col gap-3 border-t border-border/60 pt-6 sm:flex-row sm:items-stretch sm:justify-between"
+        aria-label="Category pagination"
+      >
+        {previous ? (
+          <Link
+            href={`/blocks/${previous.slug}`}
+            className="group flex flex-1 items-center gap-3 rounded-xl border border-border/70 bg-card px-4 py-3 transition-colors hover:border-border hover:bg-muted/40"
+          >
+            <ArrowLeft
+              className="size-4 shrink-0 text-muted-foreground transition-transform group-hover:-translate-x-0.5"
+              strokeWidth={2}
+              aria-hidden
+            />
+            <div className="min-w-0">
+              <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-muted-foreground">Previous</p>
+              <p className="truncate text-sm font-semibold text-foreground">{previous.title}</p>
+            </div>
+          </Link>
+        ) : (
+          <span className="hidden flex-1 sm:block" aria-hidden />
+        )}
+        {next ? (
+          <Link
+            href={`/blocks/${next.slug}`}
+            className="group flex flex-1 items-center justify-end gap-3 rounded-xl border border-border/70 bg-card px-4 py-3 text-right transition-colors hover:border-border hover:bg-muted/40"
+          >
+            <div className="min-w-0">
+              <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-muted-foreground">Next</p>
+              <p className="truncate text-sm font-semibold text-foreground">{next.title}</p>
+            </div>
+            <ArrowRight
+              className="size-4 shrink-0 text-muted-foreground transition-transform group-hover:translate-x-0.5"
+              strokeWidth={2}
+              aria-hidden
+            />
+          </Link>
+        ) : (
+          <span className="hidden flex-1 sm:block" aria-hidden />
+        )}
+      </nav>
+    </>
+  );
+}

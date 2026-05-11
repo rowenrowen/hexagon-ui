@@ -26,7 +26,10 @@ import {
   LogoCloud,
   LogoMarquee,
   MetricsHighlightRow,
+  NavCentered,
   NavMarketing,
+  NavPill,
+  NavSearch,
   NewsletterInline,
   PartnerLogoGrid,
   PricingAddonRow,
@@ -64,11 +67,35 @@ import {
   showcaseStats,
 } from "@/content/block-showcase-demos";
 
-/** Renders one kit block by slug — used on `/blocks` with neutral showcase copy (not live product pricing). */
+/** Renders one kit block by slug — used in `/blocks` previews. */
 export function BlockPreview({ slug }: { slug: string }) {
   switch (slug) {
     case "nav-marketing":
-      return <NavMarketing brandLabel="Northwind" links={showcaseNavLinks} cta={{ href: "#", label: "Book demo" }} />;
+      return (
+        <NavMarketing
+          brandLabel="Northwind"
+          links={showcaseNavLinks}
+          cta={{ href: "#", label: "Book demo" }}
+        />
+      );
+    case "nav-centered":
+      return <NavCentered brandLabel="Meridian" />;
+    case "nav-pill":
+      return (
+        <div className="relative min-h-full bg-gradient-to-br from-primary/20 via-background to-background pb-12">
+          <div
+            aria-hidden
+            className="pointer-events-none absolute -left-20 top-0 size-72 rounded-full bg-primary/15 blur-3xl"
+          />
+          <div
+            aria-hidden
+            className="pointer-events-none absolute -right-16 top-16 size-64 rounded-full bg-accent/15 blur-3xl"
+          />
+          <NavPill brandLabel="Halo" />
+        </div>
+      );
+    case "nav-search":
+      return <NavSearch brandLabel="Beacon" />;
     case "announcement-bar":
       return <AnnouncementBar {...showcaseAnnouncement} />;
     case "hero-marketing":
@@ -92,12 +119,12 @@ export function BlockPreview({ slug }: { slug: string }) {
     case "stats-big":
       return (
         <StatsBig
-          value="280 ms"
-          label="Median first meaningful paint after swapping in Hexagon sections"
-          supporting="Synthetic lab trace on a mid-tier laptop: marketing shell + hero + pricing + FAQ, styled with kit tokens and reduced-motion-safe defaults."
+          value="99.95%"
+          label="API success rate"
+          supporting="Last 30 days, global edge regions."
           chips={[
-            { label: "Lighthouse perf", value: "High 90s (lab)" },
-            { label: "Editor experience", value: "Copy in minutes" },
+            { label: "p99 latency", value: "120 ms" },
+            { label: "Incidents", value: "0" },
           ]}
         />
       );
@@ -199,13 +226,7 @@ export function BlockPreview({ slug }: { slug: string }) {
     case "faq-rating":
       return <FaqRating id={`faq-rating-${slug}`} />;
     case "footer-simple":
-      return (
-        <FooterSimple
-          brandName="Northwind"
-          tagline="Sample footer links for the block preview."
-          links={showcaseFooterLinks}
-        />
-      );
+      return <FooterSimple brandName="Northwind" links={showcaseFooterLinks} />;
     case "section-intro":
       return <SectionIntro />;
     case "card-stack-mini":

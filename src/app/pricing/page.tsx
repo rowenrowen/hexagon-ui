@@ -2,83 +2,78 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import {
   ArrowRight,
-  Clock,
+  Check,
   Code2,
   Layers,
   Package,
   Palette,
   RefreshCw,
   ShieldCheck,
-  Sparkles,
 } from "lucide-react";
 import { SiteHeader } from "@/components/site-header";
 import { MarketingContainer } from "@/components/layout/marketing-container";
 import { MarketingPageHero } from "@/components/marketing/marketing-page-hero";
-import { FooterSimple, PricingSingle, FaqAccordion } from "@/components/blocks";
-import { BLOCK_COUNT } from "@/content/blocks-catalog";
-import { hexagonFooterLinks, hexagonPricingBullets, hexagonPricingFaq } from "@/content/hexagon-landing";
+import { FooterSimple, FaqAccordion } from "@/components/blocks";
+import { FreeStarterDownloadLink } from "@/components/marketing/free-starter-download-link";
+import { BLOCK_COUNT, FREE_STARTER_COUNT } from "@/content/blocks-catalog";
+import { hexagonFooterLinks, hexagonPricingFaq } from "@/content/hexagon-landing";
 import { GUMROAD_CHECKOUT_URL } from "@/lib/checkout-url";
+import { SITE_PRIMARY_PURCHASE_CLASSES, SITE_SECONDARY_OUTLINE_CLASSES } from "@/lib/site-cta";
 
 export const metadata: Metadata = {
   title: "Pricing",
   description:
-    "Hexagon UI license: one-time purchase, ZIP download, README plus HANDOFF, commercial terms via Gumroad.",
+    "Hexagon UI pricing — free starter ZIP with 10 curated sections, or one-time $79 for the full library, README, HANDOFF, and v1.x updates.",
 };
 
-const includedBodyForSections =
-  "Heroes, proof strips, pricing patterns, FAQ, and motion polish, composed like a premium block library.";
+const FREE_BULLETS = [
+  `${FREE_STARTER_COUNT} curated sections — hero through conversion tail`,
+  "Same shared CSS variables as the paid kit",
+  "Drop-in React + Tailwind, no account required",
+  "Re-download anytime from the same hosted URL",
+];
 
-function IncludedGrid({ sectionCount }: { sectionCount: number }) {
-  const tiles = [
-    {
-      icon: Layers,
-      title: `${sectionCount} curated sections`,
-      body: includedBodyForSections,
-    },
-    {
-      icon: Code2,
-      title: "Paste-ready React + Tailwind",
-      body: "Real components, not screenshots. Tune copy and tokens without fighting ad-hoc markup.",
-    },
-    {
-      icon: Palette,
-      title: "Token file included",
-      body: "`hexagon-ui-variables.css` maps cleanly to shadcn-style workflows and brand generators.",
-    },
-    {
-      icon: Package,
-      title: "ZIP + Gumroad receipt",
-      body: "Instant download link, VAT handled at checkout, perpetual entitlement per listing terms.",
-    },
-    {
-      icon: RefreshCw,
-      title: "v1.x maintenance drops",
-      body: "Re-fetch the archive while v1.x is actively maintained. Major future packs may be separate SKUs.",
-    },
-    {
-      icon: ShieldCheck,
-      title: "Stakeholder handoff",
-      body: "`HANDOFF.md` explains what engineering receives so procurement and devs stay aligned.",
-    },
-  ];
+const FULL_BULLETS = [
+  `All ${BLOCK_COUNT} curated sections as React + Tailwind sources`,
+  "shadcn-compatible token file (`hexagon-ui-variables.css`)",
+  "README + buyer-facing HANDOFF docs",
+  "v1.x maintenance drops via Gumroad library",
+  "Commercial license per Gumroad listing",
+  "Lifetime download — VAT handled at checkout",
+];
 
-  return (
-    <ul className="mx-auto mt-12 grid max-w-5xl gap-4 sm:grid-cols-2 lg:grid-cols-3">
-      {tiles.map(({ icon: Icon, title, body }) => (
-        <li
-          key={title}
-          className="flex flex-col rounded-2xl border border-border/90 bg-card p-6 shadow-[0_1px_0_oklch(0_0_0/0.03)] transition-[border-color,box-shadow] hover:border-border hover:shadow-md dark:shadow-[0_1px_0_oklch(1_0_0/0.04)]"
-        >
-          <div className="flex size-10 items-center justify-center rounded-xl bg-primary/10 text-primary">
-            <Icon className="size-5" strokeWidth={1.75} aria-hidden />
-          </div>
-          <h3 className="mt-4 text-base font-semibold tracking-tight text-foreground">{title}</h3>
-          <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{body}</p>
-        </li>
-      ))}
-    </ul>
-  );
-}
+const INCLUDED_TILES = [
+  {
+    icon: Layers,
+    title: `${BLOCK_COUNT} curated sections`,
+    body: "Heroes, proof strips, pricing patterns, FAQ, and conversion polish — composed like a premium block library.",
+  },
+  {
+    icon: Code2,
+    title: "Paste-ready React + Tailwind",
+    body: "Real components, not screenshots. Tune copy and tokens without fighting ad-hoc markup.",
+  },
+  {
+    icon: Palette,
+    title: "shadcn-compatible tokens",
+    body: "`hexagon-ui-variables.css` maps cleanly to shadcn-style workflows and brand generators.",
+  },
+  {
+    icon: Package,
+    title: "ZIP + Gumroad receipt",
+    body: "Instant download link, VAT handled at checkout, perpetual entitlement per listing terms.",
+  },
+  {
+    icon: RefreshCw,
+    title: "v1.x maintenance drops",
+    body: "Re-fetch the archive while v1.x is actively maintained. Major future packs may be separate SKUs.",
+  },
+  {
+    icon: ShieldCheck,
+    title: "Stakeholder handoff",
+    body: "`HANDOFF.md` explains what engineering receives so procurement and devs stay aligned.",
+  },
+];
 
 export default function PricingPage() {
   return (
@@ -87,25 +82,20 @@ export default function PricingPage() {
       <main className="flex flex-1 flex-col">
         <MarketingPageHero
           eyebrow="Pricing"
-          title="Stop rebuilding the same marketing UI from scratch"
+          title="Try free. Unlock everything for $79."
           description={
             <>
-              One checkout unlocks production-ready sections your team can paste into Next.js or Vite. No subscription traps:
-              just a ZIP, documentation, and clear commercial terms on Gumroad.
+              Start with <strong className="text-foreground">{FREE_STARTER_COUNT} curated sections</strong> on us — same tokens as
+              the paid kit. When you&apos;re ready, one Gumroad checkout unlocks every remaining block, the shared token file, and
+              stakeholder docs. No subscription, no negotiation.
             </>
           }
           actions={
             <>
-              <Link
-                href="#checkout"
-                className="inline-flex items-center justify-center rounded-full bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground transition-opacity hover:opacity-90"
-              >
-                View license
+              <Link href="#plans" className={SITE_PRIMARY_PURCHASE_CLASSES}>
+                Compare plans
               </Link>
-              <Link
-                href="/blocks"
-                className="inline-flex items-center gap-2 rounded-full border border-border bg-background px-5 py-2.5 text-sm font-medium text-foreground shadow-sm transition-colors hover:bg-muted/70"
-              >
+              <Link href="/blocks" className={SITE_SECONDARY_OUTLINE_CLASSES}>
                 Browse blocks
                 <ArrowRight className="size-4 opacity-70" aria-hidden />
               </Link>
@@ -113,107 +103,145 @@ export default function PricingPage() {
           }
         />
 
-        <section className="border-b border-border/80 py-16 sm:py-20">
+        <section
+          id="plans"
+          className="scroll-mt-20 border-b border-border/70 bg-muted/[0.06] py-20 sm:py-28 lg:py-32"
+        >
           <MarketingContainer>
-            <div className="mx-auto max-w-2xl text-center">
-              <h2 className="text-2xl font-semibold tracking-tight text-foreground sm:text-3xl">
-                A deliberate trade for shipping teams
-              </h2>
-              <p className="mt-4 text-sm leading-relaxed text-muted-foreground sm:text-[15px]">
-                Hexagon UI isn&apos;t another abstract component kit. It&apos;s finished narrative density you can drop into a page,
-                then refine. Compare the two paths your calendar actually feels.
-              </p>
-            </div>
-
-            <div className="mx-auto mt-12 grid max-w-5xl gap-4 lg:grid-cols-2">
-              <div className="rounded-2xl border border-border bg-card p-8 shadow-sm lg:p-10">
-                <div className="flex items-center gap-3 text-muted-foreground">
-                  <Clock className="size-5 shrink-0" strokeWidth={1.75} aria-hidden />
-                  <span className="text-xs font-semibold uppercase tracking-[0.12em]">Without a block kit</span>
+            <div className="mx-auto grid max-w-5xl gap-5 lg:grid-cols-2 lg:gap-6">
+              <article className="flex flex-col rounded-2xl border border-border/80 bg-card p-7 shadow-[0_1px_0_oklch(0_0_0/0.03)] sm:p-9 dark:shadow-[0_1px_0_oklch(1_0_0/0.04)]">
+                <div className="flex items-baseline justify-between gap-3">
+                  <p className="text-xs font-semibold uppercase tracking-[0.14em] text-muted-foreground">Free starter</p>
+                  <span className="rounded-full border border-border/70 bg-background px-2.5 py-0.5 text-[11px] font-medium text-muted-foreground">
+                    Hosted ZIP
+                  </span>
                 </div>
-                <ul className="mt-6 space-y-4 text-sm leading-relaxed text-muted-foreground">
-                  <li className="flex gap-3">
-                    <span className="mt-2 size-1 shrink-0 rounded-full bg-muted-foreground/40" aria-hidden />
-                    Designers spec landing slices from scratch; engineers rebuild spacing and responsive breakpoints block by block.
-                  </li>
-                  <li className="flex gap-3">
-                    <span className="mt-2 size-1 shrink-0 rounded-full bg-muted-foreground/40" aria-hidden />
-                    Motion and accessibility polish arrive late, if they arrive at all, because velocity eats runway.
-                  </li>
-                  <li className="flex gap-3">
-                    <span className="mt-2 size-1 shrink-0 rounded-full bg-muted-foreground/40" aria-hidden />
-                    Every new section risks visual drift from the last ship unless you maintain an internal design system.
-                  </li>
-                </ul>
-              </div>
+                <p className="mt-6 flex items-baseline gap-2 text-foreground">
+                  <span className="text-5xl font-semibold tracking-tight sm:text-6xl">$0</span>
+                  <span className="text-sm text-muted-foreground">forever</span>
+                </p>
+                <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
+                  A strong starting point — no account, no Gumroad needed until you upgrade.
+                </p>
 
-              <div className="rounded-2xl border border-primary/25 bg-gradient-to-br from-primary/[0.06] via-card to-card p-8 shadow-sm ring-1 ring-primary/15 lg:p-10">
-                <div className="flex items-center gap-3 text-primary">
-                  <Sparkles className="size-5 shrink-0" strokeWidth={1.75} aria-hidden />
-                  <span className="text-xs font-semibold uppercase tracking-[0.12em]">With Hexagon UI</span>
+                <ul className="mt-8 flex flex-col gap-3 text-sm leading-relaxed text-muted-foreground">
+                  {FREE_BULLETS.map((line) => (
+                    <li key={line} className="flex gap-2.5">
+                      <Check className="mt-0.5 size-4 shrink-0 text-primary" strokeWidth={2.25} aria-hidden />
+                      <span>{line}</span>
+                    </li>
+                  ))}
+                </ul>
+
+                <div className="mt-auto flex flex-col gap-2 pt-10 sm:flex-row">
+                  <FreeStarterDownloadLink
+                    className={`${SITE_SECONDARY_OUTLINE_CLASSES} h-11 w-full justify-center px-5 text-[15px] sm:flex-1`}
+                  >
+                    Download free ZIP
+                  </FreeStarterDownloadLink>
+                  <Link
+                    href="/blocks"
+                    className="inline-flex h-11 w-full items-center justify-center rounded-lg px-5 text-[15px] font-medium text-muted-foreground transition-colors hover:text-foreground sm:flex-1"
+                  >
+                    Preview on blocks
+                    <ArrowRight className="ml-1.5 size-4 opacity-70" strokeWidth={2} aria-hidden />
+                  </Link>
                 </div>
-                <ul className="mt-6 space-y-4 text-sm leading-relaxed text-card-foreground">
-                  <li className="flex gap-3">
-                    <span className="mt-2 size-1 shrink-0 rounded-full bg-primary/70" aria-hidden />
-                    Drop curated sections that already read like a mature SaaS marketing site, then tune tokens once.
-                  </li>
-                  <li className="flex gap-3">
-                    <span className="mt-2 size-1 shrink-0 rounded-full bg-primary/70" aria-hidden />
-                    Motion defaults respect reduced-motion preferences; disclosure patterns behave like modern libraries.
-                  </li>
-                  <li className="flex gap-3">
-                    <span className="mt-2 size-1 shrink-0 rounded-full bg-primary/70" aria-hidden />
-                    Procurement sees a single SKU, engineers see filenames that match the `/blocks` hub: alignment without slack threads.
-                  </li>
-                </ul>
-              </div>
-            </div>
+              </article>
 
-            <p className="mx-auto mt-10 max-w-3xl text-center text-xs leading-relaxed text-muted-foreground">
-              Illustrative comparison; your mileage varies by team size and design maturity. The license stays one-time regardless of how many sections you ultimately ship.
-            </p>
+              <article className="relative flex flex-col overflow-hidden rounded-2xl border border-primary/35 bg-gradient-to-br from-primary/[0.07] via-card to-card p-7 shadow-[0_18px_44px_-22px_oklch(0_0_0/0.25)] ring-1 ring-primary/20 sm:p-9 dark:shadow-[0_22px_50px_-22px_oklch(0_0_0/0.7)]">
+                <div className="flex items-baseline justify-between gap-3">
+                  <p className="text-xs font-semibold uppercase tracking-[0.14em] text-primary">Full Hexagon UI kit</p>
+                  <span className="rounded-full bg-primary px-2.5 py-0.5 text-[11px] font-semibold text-primary-foreground">
+                    Most popular
+                  </span>
+                </div>
+                <p className="mt-6 flex items-baseline gap-2 text-foreground">
+                  <span className="text-5xl font-semibold tracking-tight sm:text-6xl">$79</span>
+                  <span className="text-sm text-muted-foreground">one-time</span>
+                </p>
+                <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
+                  Lifetime download · VAT handled by Gumroad · v1.x updates included.
+                </p>
+
+                <ul className="mt-8 flex flex-col gap-3 text-sm leading-relaxed text-card-foreground">
+                  {FULL_BULLETS.map((line) => (
+                    <li key={line} className="flex gap-2.5">
+                      <Check className="mt-0.5 size-4 shrink-0 text-primary" strokeWidth={2.25} aria-hidden />
+                      <span>{line}</span>
+                    </li>
+                  ))}
+                </ul>
+
+                <div className="mt-auto flex flex-col gap-2 pt-10 sm:flex-row">
+                  <Link
+                    href={GUMROAD_CHECKOUT_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={`${SITE_PRIMARY_PURCHASE_CLASSES} h-11 w-full justify-center px-5 text-[15px] sm:flex-1`}
+                  >
+                    Buy on Gumroad
+                  </Link>
+                  <Link
+                    href="/blocks"
+                    className={`${SITE_SECONDARY_OUTLINE_CLASSES} h-11 w-full justify-center px-5 text-[15px] sm:flex-1`}
+                  >
+                    Browse blocks
+                    <ArrowRight className="size-4 opacity-70" aria-hidden />
+                  </Link>
+                </div>
+              </article>
+            </div>
           </MarketingContainer>
         </section>
 
-        <section className="border-b border-border/80 bg-muted/10 py-16 sm:py-20">
+        <section className="border-b border-border/70 py-20 sm:py-28 lg:py-32">
           <MarketingContainer>
             <div className="mx-auto max-w-2xl text-center">
-              <h2 className="text-2xl font-semibold tracking-tight text-foreground sm:text-3xl">Everything in one archive</h2>
-              <p className="mt-4 text-sm leading-relaxed text-muted-foreground sm:text-[15px]">
-                No tiers to negotiate. The checkout covers the sections we showcase publicly plus the shared token file and handoff docs.
+              <p className="text-xs font-semibold uppercase tracking-[0.18em] text-primary">Included</p>
+              <h2 className="mt-3 text-balance text-3xl font-semibold tracking-tight text-foreground sm:text-4xl">
+                Everything in the paid kit
+              </h2>
+              <p className="mt-4 text-pretty text-base leading-relaxed text-muted-foreground sm:text-[17px]">
+                One Gumroad SKU covers every section in the catalog beyond the free starter, plus the shared token file and
+                stakeholder docs. Still one negotiation-free checkout.
               </p>
             </div>
 
-            <IncludedGrid sectionCount={BLOCK_COUNT} />
+            <ul className="mx-auto mt-12 grid max-w-5xl gap-4 sm:grid-cols-2 lg:grid-cols-3 lg:gap-5">
+              {INCLUDED_TILES.map(({ icon: Icon, title, body }) => (
+                <li
+                  key={title}
+                  className="flex flex-col rounded-2xl border border-border/80 bg-card p-6 shadow-[0_1px_0_oklch(0_0_0/0.03)] transition-[border-color,box-shadow] hover:border-border hover:shadow-md sm:p-7 dark:shadow-[0_1px_0_oklch(1_0_0/0.04)]"
+                >
+                  <div className="flex size-10 items-center justify-center rounded-xl bg-primary/12 text-primary">
+                    <Icon className="size-5" strokeWidth={1.75} aria-hidden />
+                  </div>
+                  <h3 className="mt-5 text-base font-semibold tracking-tight text-foreground">{title}</h3>
+                  <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{body}</p>
+                </li>
+              ))}
+            </ul>
 
-            <div className="mx-auto mt-12 max-w-3xl rounded-2xl border border-dashed border-border/90 bg-background/80 px-6 py-5 text-center text-sm leading-relaxed text-muted-foreground">
+            <div className="mx-auto mt-12 max-w-3xl rounded-2xl border border-dashed border-border/80 bg-background/80 px-6 py-5 text-center text-sm leading-relaxed text-muted-foreground">
               Need a manifest before moving budget?{" "}
               <Link href="/kit" className="font-semibold text-foreground underline-offset-4 hover:underline">
                 Open the kit index
               </Link>{" "}
-              Filenames mirror each preview on `/blocks`.
+              — filenames mirror each preview on{" "}
+              <Link href="/blocks" className="font-semibold text-foreground underline-offset-4 hover:underline">
+                /blocks
+              </Link>
+              .
             </div>
           </MarketingContainer>
         </section>
-
-        <PricingSingle
-          checkoutHref={GUMROAD_CHECKOUT_URL}
-          eyebrow="Hexagon UI · v1"
-          title="Checkout takes under a minute"
-          priceLabel="$79"
-          priceHint="One-time purchase · VAT handled by Gumroad · perpetual download link"
-          bullets={hexagonPricingBullets}
-          checkoutLabel="Buy on Gumroad"
-          id="checkout"
-          headingAlign="center"
-          className="scroll-mt-24 border-t border-border/80 bg-background py-16 sm:py-24"
-        />
 
         <FaqAccordion
           title="Billing & licensing"
           items={hexagonPricingFaq}
           id="pricing-faq"
-          className="border-t border-border/80 bg-muted/[0.08] py-16 sm:py-24"
+          className="border-t border-border/70 bg-muted/[0.06]"
         />
       </main>
       <FooterSimple

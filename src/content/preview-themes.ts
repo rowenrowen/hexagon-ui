@@ -1,11 +1,33 @@
-/** Curated palettes for `/blocks` preview canvas — multi-dot swatches similar to premium block hubs. */
+/**
+ * Preview palettes for the `/blocks` canvas.
+ *
+ * Each palette is grounded in a real, widely-recognized design system so the
+ * options feel like familiar territory ("oh, that's Linear/Stripe/Nord") rather
+ * than generic color tones. Names are evocative — usually a product or feature
+ * the source is known for — so the swatch stays useful at a glance.
+ *
+ * Source palettes:
+ *  - Edge        → Vercel (pure mono, sharp)
+ *  - Triage      → Linear (soft lavender violet)
+ *  - Checkout    → Stripe (deep payments purple)
+ *  - Primer      → GitHub Primer (slate + blue + amber)
+ *  - Notebook    → Notion (warm paper, ink, terracotta)
+ *  - Latte       → Catppuccin Latte (pastel mauve + flamingo)
+ *  - Frostpane   → Nord (Snow Storm + Frost)
+ *  - Daybreak    → Solarized Light (Schoonover, cream + cyan + yellow)
+ *  - Postgres    → Supabase (Postgres emerald)
+ *  - Dracula     → Dracula (purple + pink + cyan on charcoal)
+ *  - Skyline     → Tokyo Night (deep navy + violet + cyan)
+ *  - Greenroom   → Spotify (bold emerald on near-black)
+ */
 
 export type PreviewThemeMeta = {
   id: string;
-  /** Short editorial name */
+  /** Short editorial name (clever, source-evocative). */
   label: string;
+  /** One-line attribution / vibe. */
   subtitle: string;
-  /** Three Tailwind `bg-*` classes for picker dots (foreground-ish hues). */
+  /** Three Tailwind `bg-*` classes representing the palette's signature colors (low → primary → deep). */
   dots: [string, string, string];
 };
 
@@ -14,68 +36,80 @@ export const PREVIEW_THEME_DEFAULT_ID = "default";
 export const PREVIEW_THEMES: PreviewThemeMeta[] = [
   {
     id: "default",
-    label: "Studio Default",
-    subtitle: "Matches this marketing site.",
-    dots: ["bg-slate-400", "bg-teal-600", "bg-slate-900"],
+    label: "Hexagon",
+    subtitle: "Our house cyan and slate.",
+    dots: ["bg-slate-200", "bg-teal-500", "bg-slate-900"],
   },
   {
-    id: "ocean",
-    label: "Harbor Glass",
-    subtitle: "Cool teal chrome, calm canvas.",
-    dots: ["bg-sky-400", "bg-cyan-600", "bg-teal-700"],
+    id: "vercel",
+    label: "Edge",
+    subtitle: "Vercel-style pure mono.",
+    dots: ["bg-zinc-100", "bg-zinc-500", "bg-zinc-950"],
   },
   {
-    id: "violet",
-    label: "Signal Bloom",
-    subtitle: "Confident violet rails.",
-    dots: ["bg-violet-300", "bg-violet-600", "bg-indigo-800"],
+    id: "linear",
+    label: "Triage",
+    subtitle: "Linear lavender focus.",
+    dots: ["bg-violet-200", "bg-violet-500", "bg-slate-900"],
   },
   {
-    id: "rose",
-    label: "Clay Editorial",
-    subtitle: "Warm blush accent bands.",
-    dots: ["bg-rose-200", "bg-rose-500", "bg-rose-950"],
+    id: "stripe",
+    label: "Checkout",
+    subtitle: "Stripe payments purple.",
+    dots: ["bg-indigo-200", "bg-indigo-600", "bg-slate-950"],
   },
   {
-    id: "amber",
-    label: "Honey CTA",
-    subtitle: "High-energy funnel accents.",
-    dots: ["bg-amber-200", "bg-amber-500", "bg-orange-900"],
+    id: "github",
+    label: "Primer",
+    subtitle: "GitHub Primer slate and blue.",
+    dots: ["bg-slate-200", "bg-blue-600", "bg-slate-900"],
   },
   {
-    id: "forest",
-    label: "Evergreen Ops",
-    subtitle: "Grounded green UI chrome.",
-    dots: ["bg-emerald-300", "bg-emerald-600", "bg-green-950"],
+    id: "supabase",
+    label: "Postgres",
+    subtitle: "Supabase emerald on warm canvas.",
+    dots: ["bg-emerald-200", "bg-emerald-500", "bg-slate-900"],
   },
   {
-    id: "slate",
-    label: "Carbon SaaS",
-    subtitle: "Neutral rails, crisp type.",
-    dots: ["bg-slate-300", "bg-slate-500", "bg-slate-900"],
+    id: "notion",
+    label: "Notebook",
+    subtitle: "Notion warm paper and ink.",
+    dots: ["bg-stone-200", "bg-amber-700", "bg-stone-900"],
   },
   {
-    id: "mono",
-    label: "Ink & Paper",
-    subtitle: "Strict monochrome discipline.",
-    dots: ["bg-zinc-300", "bg-zinc-600", "bg-black"],
+    id: "catppuccin",
+    label: "Latte",
+    subtitle: "Catppuccin Latte pastels.",
+    dots: ["bg-rose-200", "bg-fuchsia-500", "bg-violet-950"],
   },
   {
-    id: "indigo",
-    label: "Midnight Canvas",
-    subtitle: "Deep indigo depth.",
-    dots: ["bg-indigo-300", "bg-indigo-600", "bg-indigo-950"],
+    id: "nord",
+    label: "Frostpane",
+    subtitle: "Nord arctic Snow Storm and Frost.",
+    dots: ["bg-slate-200", "bg-sky-400", "bg-slate-700"],
   },
   {
-    id: "sky",
-    label: "Daybreak UI",
-    subtitle: "Bright sky clarity.",
-    dots: ["bg-sky-200", "bg-sky-500", "bg-blue-900"],
+    id: "solarized",
+    label: "Daybreak",
+    subtitle: "Solarized Light — cream, teal, yellow.",
+    dots: ["bg-amber-100", "bg-cyan-700", "bg-slate-800"],
   },
   {
-    id: "mint",
-    label: "Seafoam Dev",
-    subtitle: "Fresh mint supportive tones.",
-    dots: ["bg-teal-200", "bg-teal-500", "bg-teal-950"],
+    id: "dracula",
+    label: "Dracula",
+    subtitle: "Dracula — purple, pink, cyan on charcoal.",
+    dots: ["bg-purple-300", "bg-pink-500", "bg-slate-900"],
+  },
+  {
+    id: "tokyo",
+    label: "Skyline",
+    subtitle: "Tokyo Night — deep navy and neon violet.",
+    dots: ["bg-violet-300", "bg-blue-700", "bg-slate-950"],
+  },
+  {
+    id: "spotify",
+    label: "Greenroom",
+    subtitle: "Spotify — bold emerald on near-black.",
+    dots: ["bg-emerald-300", "bg-emerald-500", "bg-zinc-950"],
   },
 ];

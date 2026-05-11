@@ -1,12 +1,10 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" role="img" aria-label="Hexagon UI">
-  <rect width="32" height="32" rx="8" fill="#0b3d42" />
-  <!-- Outline hex (Lucide hexagon path), inset 4px -->
-  <path
+  <polygon
+    points="16,5 25.526,10.5 25.526,21.5 16,27 6.474,21.5 6.474,10.5"
     fill="none"
     stroke="#5dc9d4"
-    stroke-width="1.65"
+    stroke-width="2.2"
+    stroke-linecap="round"
     stroke-linejoin="round"
-    d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"
-    transform="translate(4 4)"
   />
 </svg>

@@ -4,6 +4,7 @@ import Link from "next/link";
 import { Menu, Search, X } from "lucide-react";
 import { useEffect } from "react";
 import { SITE_PRIMARY_NAV } from "@/content/site-nav";
+import { SITE_PRIMARY_PURCHASE_CLASSES } from "@/lib/site-cta";
 import { HEADER_SURFACE_BTN_CLASSES } from "@/components/theme-toggle";
 
 type MobileNavProps = {
@@ -112,7 +113,7 @@ export function MobileNav({
               <Link
                 href="/pricing"
                 onClick={() => onOpenChange(false)}
-                className="mt-2 inline-flex w-full items-center justify-center rounded-lg bg-primary py-2.5 text-sm font-semibold text-primary-foreground"
+                className={`${SITE_PRIMARY_PURCHASE_CLASSES} mt-2 w-full`}
               >
                 Buy
               </Link>

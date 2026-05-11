@@ -12,6 +12,7 @@ import {
 } from "cmdk";
 import {
   CreditCard,
+  Download,
   FileText,
   HelpCircle,
   Home,
@@ -20,12 +21,12 @@ import {
   PanelRight,
   Scale,
   Search,
-  Sparkles,
   Sun,
 } from "lucide-react";
 import { useTheme } from "next-themes";
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect } from "react";
+import { FREE_STARTER_DOWNLOAD_URL } from "@/lib/checkout-url";
 
 const gumroadUrl = process.env.NEXT_PUBLIC_GUMROAD_PRODUCT_URL;
 
@@ -128,6 +129,15 @@ export function CommandMenu({ open, onOpenChange }: CommandMenuProps) {
                   Pricing
                 </CommandItem>
                 <CommandItem
+                  value="docs handoff guide buyer"
+                  keywords={["docs", "guide", "handoff", "readme"]}
+                  onSelect={() => go("/docs")}
+                  className="flex cursor-pointer items-center gap-2 rounded-lg px-2 py-2 text-sm aria-selected:bg-muted"
+                >
+                  <PanelRight className="size-4 text-muted-foreground" aria-hidden />
+                  Docs
+                </CommandItem>
+                <CommandItem
                   value="faq homepage section"
                   keywords={["help", "questions", "answers"]}
                   onSelect={() => go("/#faq")}
@@ -136,28 +146,19 @@ export function CommandMenu({ open, onOpenChange }: CommandMenuProps) {
                   <HelpCircle className="size-4 text-muted-foreground" aria-hidden />
                   FAQ on homepage
                 </CommandItem>
-                <CommandItem
-                  value="home features product section"
-                  keywords={["overview", "landing", "features", "scroll"]}
-                  onSelect={() => go("/#product")}
-                  className="flex cursor-pointer items-center gap-2 rounded-lg px-2 py-2 text-sm aria-selected:bg-muted"
-                >
-                  <Sparkles className="size-4 text-muted-foreground" aria-hidden />
-                  Features on homepage
-                </CommandItem>
               </CommandGroup>
 
               <CommandSeparator className="my-2 h-px bg-border" />
 
-              <CommandGroup heading="Guides & legal">
+              <CommandGroup heading="Docs & legal">
                 <CommandItem
-                  value="buyer handoff guide"
-                  keywords={["readme", "zip", "developer", "buyer"]}
-                  onSelect={() => go("/handoff")}
+                  value="docs handoff guide"
+                  keywords={["readme", "zip", "developer", "buyer", "docs"]}
+                  onSelect={() => go("/docs")}
                   className="flex cursor-pointer items-center gap-2 rounded-lg px-2 py-2 text-sm aria-selected:bg-muted"
                 >
                   <PanelRight className="size-4 text-muted-foreground" aria-hidden />
-                  Buyer guide
+                  Docs
                 </CommandItem>
                 <CommandItem
                   value="privacy policy"
@@ -176,6 +177,26 @@ export function CommandMenu({ open, onOpenChange }: CommandMenuProps) {
                 >
                   <Scale className="size-4 text-muted-foreground" aria-hidden />
                   Terms
+                </CommandItem>
+                <CommandItem
+                  value="free starter zip download"
+                  keywords={["free", "starter", "zip", "download", "trial"]}
+                  onSelect={() =>
+                    runCommand(() => {
+                      const isAbsolute =
+                        FREE_STARTER_DOWNLOAD_URL.startsWith("http://") ||
+                        FREE_STARTER_DOWNLOAD_URL.startsWith("https://");
+                      if (isAbsolute) {
+                        window.open(FREE_STARTER_DOWNLOAD_URL, "_blank", "noopener,noreferrer");
+                      } else {
+                        window.location.assign(FREE_STARTER_DOWNLOAD_URL);
+                      }
+                    })
+                  }
+                  className="flex cursor-pointer items-center gap-2 rounded-lg px-2 py-2 text-sm aria-selected:bg-muted"
+                >
+                  <Download className="size-4 text-muted-foreground" aria-hidden />
+                  Download free starter ZIP
                 </CommandItem>
                 {gumroadUrl ? (
                   <CommandItem

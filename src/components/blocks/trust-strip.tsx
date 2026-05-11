@@ -6,10 +6,10 @@ import { BlockRevealSpan } from "./block-reveal";
 export type TrustStripItem = { icon: LucideIcon; label: string };
 
 export const trustStripDefaults: TrustStripItem[] = [
-  { icon: Boxes, label: "Composable sections" },
-  { icon: Palette, label: "Theme-ready tokens" },
-  { icon: Sparkles, label: "Lucide icons" },
-  { icon: Zap, label: "Motion where it counts" },
+  { icon: Boxes, label: "Designer-curated block set" },
+  { icon: Palette, label: "Theme-ready semantic tokens" },
+  { icon: Sparkles, label: "Pixel-perfect visual QA" },
+  { icon: Zap, label: "Motion with accessibility defaults" },
 ];
 
 export type TrustStripProps = {

@@ -8,6 +8,7 @@ import { CommandMenu } from "@/components/command-menu";
 import { MobileNav } from "@/components/mobile-nav";
 import { HEADER_SURFACE_BTN_CLASSES, ThemeToggle } from "@/components/theme-toggle";
 import { SITE_PRIMARY_NAV } from "@/content/site-nav";
+import { SITE_PRIMARY_PURCHASE_CLASSES } from "@/lib/site-cta";
 
 function linkActive(pathname: string, href: string) {
   return pathname === href || pathname.startsWith(`${href}/`);
@@ -77,10 +78,7 @@ export function SiteHeader() {
 
             <ThemeToggle />
 
-            <Link
-              href="/pricing"
-              className="inline-flex h-9 shrink-0 items-center justify-center rounded-lg bg-primary px-3.5 text-sm font-semibold text-primary-foreground shadow-sm transition-[opacity,transform] hover:opacity-92 active:scale-[0.97] sm:px-4"
-            >
+            <Link href="/pricing" className={SITE_PRIMARY_PURCHASE_CLASSES}>
               Buy
             </Link>
 
