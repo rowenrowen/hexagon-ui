@@ -11,5 +11,4 @@ export const PREVIEW_RADIUS_OPTIONS: PreviewRadiusMeta[] = [
   { id: "sm", label: "Soft", hint: "Tight controls" },
   { id: "md", label: "Default", hint: "Balanced kit feel" },
   { id: "lg", label: "Rounded", hint: "Friendly SaaS" },
-  { id: "xl", label: "Pill-like", hint: "Bold cards & CTAs" },
 ];

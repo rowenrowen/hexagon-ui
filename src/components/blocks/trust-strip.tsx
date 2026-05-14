@@ -20,17 +20,22 @@ export type TrustStripProps = {
 export function TrustStrip({ items = trustStripDefaults, className }: TrustStripProps) {
   return (
     <section className={`border-b border-border bg-card/40 py-10 ${className ?? ""}`}>
-      <MarketingContainer className="flex flex-wrap items-center gap-x-7 gap-y-3 text-sm text-muted-foreground sm:gap-x-10 sm:gap-y-4">
-        {items.map(({ icon: Icon, label }, i) => (
-          <BlockRevealSpan
-            key={label}
-            delay={i * 0.05}
-            className="flex items-center gap-2 font-medium"
-          >
-            <Icon className="size-4 text-primary" strokeWidth={1.75} aria-hidden />
-            {label}
-          </BlockRevealSpan>
-        ))}
+      <MarketingContainer>
+        <ul
+          className="mx-auto grid max-w-4xl grid-cols-2 gap-x-6 gap-y-4 text-sm text-muted-foreground sm:grid-cols-4 sm:gap-x-8"
+        >
+          {items.map(({ icon: Icon, label }, i) => (
+            <li key={label} className="flex items-center justify-center sm:justify-start">
+              <BlockRevealSpan
+                delay={i * 0.05}
+                className="inline-flex items-center gap-2 text-center font-medium sm:text-left"
+              >
+                <Icon className="size-4 shrink-0 text-primary" strokeWidth={1.75} aria-hidden />
+                <span>{label}</span>
+              </BlockRevealSpan>
+            </li>
+          ))}
+        </ul>
       </MarketingContainer>
     </section>
   );

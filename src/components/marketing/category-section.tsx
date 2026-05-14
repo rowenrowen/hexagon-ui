@@ -23,6 +23,7 @@ export function CategorySection({ section }: CategorySectionProps) {
           id={b.slug}
           includedInFreeStarter={FREE_BLOCK_SLUG_SET.has(b.slug)}
           previewHeight={b.previewHeight}
+          minHeight={b.minHeight}
         />
       ))}
     </>

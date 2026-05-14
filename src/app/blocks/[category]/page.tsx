@@ -3,13 +3,17 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import { CategorySection } from "@/components/marketing/category-section";
-import { BLOCK_SECTIONS } from "@/content/blocks-catalog";
+import {
+  FREE_STARTER_COUNT,
+  FREE_STARTER_SECTION_SLUG,
+  HUB_BLOCK_SECTIONS,
+} from "@/content/blocks-catalog";
 import { SITE_PRIMARY_PURCHASE_CLASSES, SITE_SECONDARY_OUTLINE_CLASSES } from "@/lib/site-cta";
 
 type Params = { category: string };
 
 export function generateStaticParams(): Params[] {
-  return BLOCK_SECTIONS.map((s) => ({ category: s.slug }));
+  return HUB_BLOCK_SECTIONS.map((s) => ({ category: s.slug }));
 }
 
 export async function generateMetadata({
@@ -18,7 +22,7 @@ export async function generateMetadata({
   params: Promise<Params>;
 }): Promise<Metadata> {
   const { category } = await params;
-  const section = BLOCK_SECTIONS.find((s) => s.slug === category);
+  const section = HUB_BLOCK_SECTIONS.find((s) => s.slug === category);
   if (!section) return {};
   return {
     title: `${section.title} blocks`,
@@ -32,15 +36,31 @@ export default async function BlocksCategoryPage({
   params: Promise<Params>;
 }) {
   const { category } = await params;
-  const section = BLOCK_SECTIONS.find((s) => s.slug === category);
+  const section = HUB_BLOCK_SECTIONS.find((s) => s.slug === category);
   if (!section) notFound();
 
-  const idx = BLOCK_SECTIONS.findIndex((s) => s.slug === section.slug);
-  const previous = idx > 0 ? BLOCK_SECTIONS[idx - 1] : null;
-  const next = idx < BLOCK_SECTIONS.length - 1 ? BLOCK_SECTIONS[idx + 1] : null;
+  const idx = HUB_BLOCK_SECTIONS.findIndex((s) => s.slug === section.slug);
+  const previous = idx > 0 ? HUB_BLOCK_SECTIONS[idx - 1] : null;
+  const next = idx < HUB_BLOCK_SECTIONS.length - 1 ? HUB_BLOCK_SECTIONS[idx + 1] : null;
 
   return (
     <>
+      {section.slug !== FREE_STARTER_SECTION_SLUG ? (
+        <div className="mb-5 rounded-xl border border-primary/25 bg-primary/[0.07] px-4 py-3 sm:px-5">
+          <p className="text-sm leading-relaxed text-muted-foreground">
+            <span className="font-semibold text-foreground">{FREE_STARTER_COUNT} blocks</span> ship in the free starter ZIP — same
+            tokens as the paid kit.{" "}
+            <Link
+              href={`/blocks/${FREE_STARTER_SECTION_SLUG}`}
+              className="font-medium text-primary underline-offset-4 hover:underline"
+            >
+              Jump to the free starter previews
+            </Link>
+            .
+          </p>
+        </div>
+      ) : null}
+
       <header className="mb-6 flex flex-col gap-5 border-b border-border/60 pb-6 sm:mb-8 sm:pb-8">
         <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
           <div className="max-w-2xl">

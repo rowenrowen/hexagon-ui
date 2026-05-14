@@ -1,3 +1,4 @@
+import { KIT_PRIMARY_PILL } from "@/lib/kit-button-classes";
 import { MarketingLink } from "./marketing-link";
 
 export type PricingAddonRowProps = {
@@ -18,15 +19,15 @@ export function PricingAddonRow({
   className,
 }: Partial<PricingAddonRowProps> = {}) {
   return (
-    <section className={`py-10 ${className ?? ""}`}>
-      <div className="site-grid flex flex-col gap-4 rounded-xl border border-dashed border-primary/35 bg-primary/5 px-6 py-6 sm:flex-row sm:items-center sm:justify-between">
+    <section className={`px-4 py-10 sm:px-6 ${className ?? ""}`}>
+      <div className="site-grid flex flex-col gap-4 rounded-xl border border-dashed border-primary/35 bg-primary/5 px-5 py-6 sm:flex-row sm:items-center sm:justify-between sm:px-8">
         <div>
           <p className="text-sm font-semibold text-foreground">{title}</p>
           <p className="mt-1 text-xs text-muted-foreground">{body}</p>
         </div>
         <div className="flex flex-wrap items-center gap-4">
           <span className="text-lg font-semibold text-primary">{price}</span>
-          <MarketingLink href={href} className="rounded-full bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground">
+          <MarketingLink href={href} className={`${KIT_PRIMARY_PILL} px-4 py-2`}>
             {ctaLabel}
           </MarketingLink>
         </div>

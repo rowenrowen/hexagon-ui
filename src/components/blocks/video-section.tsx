@@ -1,4 +1,4 @@
-import { CirclePlay, Film } from "lucide-react";
+import { Film, Play } from "lucide-react";
 
 export type VideoSectionProps = {
   title?: string;
@@ -48,11 +48,25 @@ export function VideoSection({
                   <div className="aspect-video w-full">
                     <button
                       type="button"
-                      className="group flex size-full flex-col items-center justify-center gap-3 bg-gradient-to-b from-muted/50 to-muted/20 text-center transition-colors hover:from-muted/60 hover:to-muted/30"
+                      className="group relative flex size-full flex-col items-center justify-center gap-3 bg-gradient-to-b from-muted/50 to-muted/20 text-center transition-colors hover:from-muted/60 hover:to-muted/30"
                       aria-label="Play video placeholder"
                     >
-                      <span className="flex size-14 items-center justify-center rounded-full bg-primary text-primary-foreground shadow-lg shadow-primary/25 ring-4 ring-background transition-transform group-hover:scale-[1.03] group-active:scale-[0.98]">
-                        <CirclePlay className="size-8 -mr-0.5" strokeWidth={1.35} aria-hidden />
+                      {/* Modern player-style play button: opaque disc with a
+                          single filled triangle, optical-shifted right so it
+                          reads as centered. Backdrop blur + soft halo on
+                          hover (matches Loom / YouTube hover treatment). */}
+                      <span className="relative grid size-12 place-items-center">
+                        <span
+                          aria-hidden
+                          className="absolute inset-0 rounded-full bg-primary/25 blur-lg transition-opacity duration-300 group-hover:opacity-100"
+                        />
+                        <span className="relative flex size-11 items-center justify-center rounded-full border-2 border-primary/40 bg-background/95 text-primary shadow-sm ring-2 ring-primary/15 backdrop-blur-sm transition-[transform,background-color,border-color,box-shadow] duration-200 group-hover:scale-105 group-hover:border-primary/55 group-hover:bg-primary/10 group-hover:shadow-md group-active:scale-[0.97] dark:bg-card/95">
+                          <Play
+                            className="size-4 translate-x-[1px] fill-current"
+                            strokeWidth={0}
+                            aria-hidden
+                          />
+                        </span>
                       </span>
                       <span className="px-4 text-xs font-medium text-muted-foreground">
                         Drop your player here — this control is decorative for the kit preview.

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { Hexagon, Menu, Search, X } from "lucide-react";
 import { MarketingLink } from "./marketing-link";
@@ -48,12 +48,28 @@ export function NavSearch({
 }: NavSearchProps) {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [shortcut, setShortcut] = useState<"⌘" | "Ctrl">("⌘");
+  const [query, setQuery] = useState("");
+  const inputRef = useRef<HTMLInputElement>(null);
   const reduceMotion = useReducedMotion();
 
   useEffect(() => {
     if (typeof navigator !== "undefined" && !/Mac|iPhone|iPad|iPod/i.test(navigator.platform)) {
       setShortcut("Ctrl");
     }
+  }, []);
+
+  // Hook up ⌘K / Ctrl+K so the keyboard shortcut actually focuses the field
+  // (matches the visual hint — otherwise the kbd is misleading).
+  useEffect(() => {
+    function onKey(e: KeyboardEvent) {
+      const isCmdK = (e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k";
+      if (!isCmdK) return;
+      e.preventDefault();
+      inputRef.current?.focus();
+      inputRef.current?.select();
+    }
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
   }, []);
 
   return (
@@ -84,18 +100,24 @@ export function NavSearch({
           ))}
         </nav>
 
-        <button
-          type="button"
-          className="group/search relative flex h-9 min-w-0 flex-1 items-center gap-2 rounded-lg border border-border/80 bg-background/70 px-3 text-left text-sm text-muted-foreground transition-colors hover:border-border hover:bg-background focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
+        <label
+          className="group/search relative flex h-9 min-w-0 flex-1 items-center gap-2 rounded-lg border border-border/80 bg-background/70 pl-3 pr-2 text-sm transition-colors focus-within:border-primary/60 focus-within:bg-background focus-within:ring-2 focus-within:ring-primary/25 hover:border-border hover:bg-background"
           aria-label="Search"
         >
           <Search className="size-4 shrink-0 text-muted-foreground/80" strokeWidth={2} aria-hidden />
-          <span className="min-w-0 flex-1 truncate font-normal">{searchPlaceholder}</span>
-          <kbd className="ml-auto hidden shrink-0 items-center gap-0.5 rounded border border-border/70 bg-muted/60 px-1.5 py-0.5 font-mono text-[10px] font-semibold text-muted-foreground sm:inline-flex">
+          <input
+            ref={inputRef}
+            type="search"
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            placeholder={searchPlaceholder}
+            className="peer min-w-0 flex-1 bg-transparent text-sm text-foreground outline-none placeholder:text-muted-foreground"
+          />
+          <kbd className="ml-auto hidden shrink-0 items-center gap-0.5 rounded border border-border/70 bg-muted/60 px-1.5 py-0.5 font-mono text-[10px] font-semibold text-muted-foreground sm:inline-flex peer-focus:opacity-40">
             <span className="text-[11px] leading-none">{shortcut}</span>
             <span>K</span>
           </kbd>
-        </button>
+        </label>
 
         <div className="hidden shrink-0 md:block">
           <motion.div whileHover={reduceMotion ? undefined : { y: -1 }} whileTap={reduceMotion ? undefined : { scale: 0.985 }}>

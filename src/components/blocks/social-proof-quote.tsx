@@ -39,7 +39,7 @@ export function SocialProofQuote(props: Partial<SocialProofQuoteProps> = {}) {
             {p.intro ? <p className="mt-3 text-sm leading-relaxed text-muted-foreground sm:text-[15px]">{p.intro}</p> : null}
           </div>
         ) : null}
-        <BlockReveal className="max-w-2xl">
+        <BlockReveal className="mx-auto w-full max-w-2xl">
           <div className="rounded-2xl border border-border/90 bg-card p-6 shadow-lg shadow-black/20 ring-1 ring-white/[0.04] sm:p-8">
             <div className="flex items-center justify-between gap-3">
               <div className="flex -space-x-2">

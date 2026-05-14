@@ -6,10 +6,18 @@ export type BlockEntry = {
   frameTitle: string;
   frameDescription: string;
   /**
-   * Iframe height for `/blocks/*` previews, in pixels. Defaults to 480.
-   * Set higher for blocks with menus/dropdowns/heroes that need vertical room.
+   * Initial iframe height (px). Shown before the iframe reports its settled
+   * content height. Used to prevent CLS — the iframe ends up sized to the
+   * measured block height, not this value.
    */
   previewHeight?: number;
+  /**
+   * Optional **minimum** iframe height (px). Useful only for blocks with
+   * floating overlays that must remain inside the iframe viewport (e.g. nav
+   * dropdowns). Leave unset for normal blocks so the iframe sizes tight to
+   * content.
+   */
+  minHeight?: number;
 };
 
 export type BlockSectionMeta = {
@@ -23,35 +31,47 @@ export const BLOCK_SECTIONS: BlockSectionMeta[] = [
   {
     slug: "navigation",
     title: "Navigation",
-    description: "Marketing-site header patterns — four distinct layouts for classic, editorial, product-led, and docs-style shells.",
+    description: "Marketing-site header patterns — classic, editorial, product-led, docs-style, and a content-rich mega nav.",
     blocks: [
       {
         slug: "nav-marketing",
         file: "nav-marketing.tsx",
         frameTitle: "NavMarketing",
         frameDescription: "Classic split bar with hover dropdowns and a primary CTA.",
-        previewHeight: 460,
+        previewHeight: 380,
+        minHeight: 380, // room for open dropdown menu inside the viewport
       },
       {
         slug: "nav-centered",
         file: "nav-centered.tsx",
         frameTitle: "NavCentered",
         frameDescription: "Centered wordmark flanked by split nav rails — editorial / brand-led.",
-        previewHeight: 380,
+        previewHeight: 240,
+        minHeight: 240, // room for open mobile drawer
       },
       {
         slug: "nav-pill",
         file: "nav-pill.tsx",
         frameTitle: "NavPill",
         frameDescription: "True floating capsule with hero backdrop — overlays product art.",
-        previewHeight: 460,
+        previewHeight: 320,
+        minHeight: 320, // room for open mobile popover + hero gradient
       },
       {
         slug: "nav-search",
         file: "nav-search.tsx",
         frameTitle: "NavSearch",
         frameDescription: "Docs-style bar with a prominent ⌘K search input and dense actions.",
-        previewHeight: 420,
+        previewHeight: 240,
+        minHeight: 240, // room for open mobile drawer
+      },
+      {
+        slug: "nav-mega",
+        file: "nav-mega.tsx",
+        frameTitle: "NavMega",
+        frameDescription: "Content-rich header — mega panels with icons, featured rail, dual CTAs.",
+        previewHeight: 320,
+        minHeight: 440,
       },
     ],
   },
@@ -429,7 +449,7 @@ export const BLOCK_SECTIONS: BlockSectionMeta[] = [
   {
     slug: "faq-footer",
     title: "FAQ & footer",
-    description: "Accordion objections, helpful voting patterns, section spines, and marketing footer.",
+    description: "Accordion objections, helpful voting patterns, section spines, and multi-density marketing footers.",
     blocks: [
       {
         slug: "faq-accordion",
@@ -451,6 +471,20 @@ export const BLOCK_SECTIONS: BlockSectionMeta[] = [
         frameTitle: "FooterSimple",
         frameDescription: "Copyright + link row — same pattern as this marketing site.",
         previewHeight: 280,
+      },
+      {
+        slug: "footer-columns",
+        file: "footer-columns.tsx",
+        frameTitle: "FooterColumns",
+        frameDescription: "Four-column marketing footer + brand lane and legal strip.",
+        previewHeight: 420,
+      },
+      {
+        slug: "footer-sitemap",
+        file: "footer-sitemap.tsx",
+        frameTitle: "FooterSitemap",
+        frameDescription: "Dense five-column sitemap — enterprise-scale link budgets.",
+        previewHeight: 480,
       },
     ],
   },
@@ -528,3 +562,6 @@ export function catalogSectionsForHub(): BlockSectionMeta[] {
     ...paidSections,
   ];
 }
+
+/** `/blocks` hub sidebar + routes — free starter first; paid categories omit duplicate starter slugs. */
+export const HUB_BLOCK_SECTIONS: BlockSectionMeta[] = catalogSectionsForHub();

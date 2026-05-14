@@ -1,18 +1,24 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { BlockPreview } from "@/components/marketing/block-preview";
 import { PreviewAutoHeight } from "@/components/marketing/preview-auto-height";
+import { PreviewThemeBridge } from "@/components/marketing/preview-theme-bridge";
+import { PreviewBlockHost } from "@/components/marketing/preview-block-host";
 import { BLOCK_SECTIONS } from "@/content/blocks-catalog";
 import { PREVIEW_THEME_DEFAULT_ID } from "@/content/preview-themes";
 
 /**
- * Isolated, iframe-friendly render surface for one block.
+ * Isolated render surface for one block. Loaded by the gallery as an iframe
+ * (`/preview/blocks/<slug>?theme=…&radius=…`).
  *
- * Matches the showcase pattern used by tailark / shadcnblocks:
- *  - No site chrome, no margins, no Hexagon nav.
- *  - Block renders inside a `.preview-theme-scope` so theme + radius tokens apply.
- *  - Theme + radius come in as URL params from the gallery (`?theme=...&radius=...`),
- *    so the gallery just rebuilds the iframe src to swap palettes — no postMessage plumbing.
+ * - Initial theme/radius come from URL params (avoids FOUC on first paint).
+ * - After mount, `PreviewThemeBridge` listens for postMessage updates from
+ *   the parent gallery so theme/radius changes apply **live**, without
+ *   reloading the iframe.
+ * - The wrapper does NOT use `min-h-dvh` — height matches the block, so the
+ *   gallery frame can size itself tightly via the reported content height.
+ * - A scoped style suppresses the trailing `border-b` that blocks ship with
+ *   for page stacking; in a per-block showcase that border becomes a stray
+ *   horizontal line at the bottom.
  */
 
 type PageProps = {
@@ -35,34 +41,31 @@ export default async function PreviewBlockPage({ params, searchParams }: PagePro
   if (!ALL_BLOCK_SLUGS.includes(slug)) notFound();
 
   const { theme, radius } = await searchParams;
+  const initialTheme = theme ?? PREVIEW_THEME_DEFAULT_ID;
+  const initialRadius = radius ?? "md";
   const themeAttr =
-    theme && theme !== PREVIEW_THEME_DEFAULT_ID
-      ? { "data-preview-theme": theme }
-      : {};
-  const radiusAttr = { "data-preview-radius": radius ?? "md" };
+    initialTheme !== PREVIEW_THEME_DEFAULT_ID ? { "data-preview-theme": initialTheme } : {};
 
   return (
     <>
-      {/*
-        Next.js renders its dev tools indicator and error overlay inside a
-        `<nextjs-portal>` custom element at body level. Each iframe is its own
-        document, so the indicator shows up in every block preview during dev.
-        Hide it inside iframe documents only — the main app keeps the indicator.
-
-        Also remove any default body margin and forbid scrollbars so the
-        iframe never shows its own scroll chrome (the gallery sizes the frame
-        to content height instead).
-      */}
-      <style>{`nextjs-portal{display:none!important}html,body{margin:0;overflow:hidden;background:var(--background)}`}</style>
+      <style>{`
+nextjs-portal{display:none!important}
+html,body{margin:0;overflow:hidden;background:var(--background)}
+/* Suppress the trailing block divider that ships on every block's outer
+   section — useful when stacking on a real page, distracting in isolation. */
+#hexagon-preview-content > *{border-bottom-color:transparent!important;border-bottom-width:0!important}
+      `}</style>
       <div
-        className="preview-theme-scope min-h-dvh w-full bg-background text-foreground"
+        id="hexagon-preview-root"
+        className="preview-theme-scope w-full bg-background text-foreground"
         {...themeAttr}
-        {...radiusAttr}
+        data-preview-radius={initialRadius}
       >
         <div id="hexagon-preview-content">
-          <BlockPreview slug={slug} />
+          <PreviewBlockHost slug={slug} />
         </div>
       </div>
+      <PreviewThemeBridge />
       <PreviewAutoHeight slug={slug} />
     </>
   );

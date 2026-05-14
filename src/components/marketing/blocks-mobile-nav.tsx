@@ -4,7 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { ChevronDown, SlidersHorizontal } from "lucide-react";
 import { PreviewAppearancePanel } from "@/components/marketing/preview-controls";
-import { BLOCK_SECTIONS } from "@/content/blocks-catalog";
+import { HUB_BLOCK_SECTIONS } from "@/content/blocks-catalog";
 
 /**
  * Mobile `/blocks/*`: one horizontal row of category pills; preview tuning lives in a collapsible panel.
@@ -19,7 +19,7 @@ export function BlocksMobileNav() {
     <div className="sticky top-14 z-20 border-b border-border/70 bg-background/95 backdrop-blur-lg lg:hidden">
       <nav aria-label="Categories" className="px-3 pt-2">
         <div className="flex gap-2 overflow-x-auto pb-3 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-          {BLOCK_SECTIONS.map((section) => {
+          {HUB_BLOCK_SECTIONS.map((section) => {
             const active = activeSlug === section.slug;
             return (
               <Link

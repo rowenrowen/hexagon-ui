@@ -24,11 +24,18 @@ type GalleryBlockFrameProps = {
   /** True when this block ships in the free starter ZIP — adds a "Starter" badge. */
   includedInFreeStarter?: boolean;
   /**
-   * Initial iframe height in pixels (used before the iframe reports its
-   * actual content height via postMessage). Defaults to 320. After load,
-   * the frame auto-resizes to fit the block — no scrollbars inside frames.
+   * Initial iframe height in pixels, shown only until the iframe posts its
+   * settled content height (typically 200–400ms). Used to avoid CLS, not as
+   * a final size. Defaults to 320.
    */
   previewHeight?: number;
+  /**
+   * Optional **minimum** iframe height in pixels. The frame never shrinks
+   * below this even after measurement — used for nav blocks where the bar
+   * itself is short but the iframe needs room for open dropdowns / drawers
+   * floating inside the viewport.
+   */
+  minHeight?: number;
 };
 
 /** Hard ceiling so a runaway message can never blow up the gallery. */
@@ -78,13 +85,10 @@ export function Block(props: BlockProps) {
  * Block showcase frame.
  *
  * Renders each block inside an `<iframe>` pointing at `/preview/blocks/<slug>`
- * — same pattern as tailark / shadcnblocks. This gives each block:
- *  - Its own viewport, so mobile breakpoints actually trigger.
- *  - Isolated stacking context, so dropdowns/menus can't extend into other blocks.
- *  - Independent scrolling for long content (mobile pricing tables, etc).
- *
- * Theme + corner radius are passed in via URL params; changing them in the
- * gallery rebuilds the iframe src.
+ * — same isolation model as Tailark / shadcnblocks. Theme + radius are sent
+ * live via `postMessage` so changing them never reloads the iframe. The
+ * iframe reports its settled content height once; that becomes the frame
+ * size (clamped to `minHeight` for blocks with floating overlays like navs).
  */
 export function GalleryBlockFrame({
   slug,
@@ -93,6 +97,7 @@ export function GalleryBlockFrame({
   id,
   includedInFreeStarter,
   previewHeight = 320,
+  minHeight,
 }: GalleryBlockFrameProps) {
   const reduceMotion = useReducedMotion();
   const [tab, setTab] = useState<"preview" | "code">("preview");
@@ -100,33 +105,57 @@ export function GalleryBlockFrame({
   const iframeRef = useRef<HTMLIFrameElement | null>(null);
   const [measuredHeight, setMeasuredHeight] = useState<number | null>(null);
 
-  const themeParam = themeId !== PREVIEW_THEME_DEFAULT_ID ? `&theme=${encodeURIComponent(themeId)}` : "";
-  const iframeSrc = `/preview/blocks/${slug}?radius=${encodeURIComponent(radiusId)}${themeParam}`;
+  // Build src once per slug; theme/radius are only used for first-paint
+  // (initial URL params). After load we update them live via postMessage.
+  const [initialThemeRef, initialRadiusRef] = [useRef(themeId), useRef(radiusId)];
+  const themeParam =
+    initialThemeRef.current !== PREVIEW_THEME_DEFAULT_ID
+      ? `&theme=${encodeURIComponent(initialThemeRef.current)}`
+      : "";
+  const iframeSrc = `/preview/blocks/${slug}?radius=${encodeURIComponent(initialRadiusRef.current)}${themeParam}`;
 
-  // Reset measured height whenever the iframe src changes (theme / radius swap)
-  // so we re-measure the fresh document instead of holding stale dimensions.
-  useEffect(() => {
-    setMeasuredHeight(null);
-  }, [iframeSrc]);
-
+  // Listen for height reports from this iframe.
   useEffect(() => {
     function onMessage(e: MessageEvent) {
       if (!e.data || typeof e.data !== "object") return;
-      const { type, slug: msgSlug, height } = e.data as {
+      if (e.source !== iframeRef.current?.contentWindow) return;
+      const data = e.data as {
         type?: string;
         slug?: string;
         height?: number;
       };
-      if (type !== "hexagon:preview:height" || msgSlug !== slug) return;
-      if (e.source !== iframeRef.current?.contentWindow) return;
-      if (typeof height !== "number" || !Number.isFinite(height) || height <= 0) return;
-      setMeasuredHeight(Math.min(Math.ceil(height), MAX_FRAME_HEIGHT));
+      if (data.type === "hexagon:preview:ready") {
+        // Iframe just mounted — push current theme/radius so it's in sync.
+        sendAppearance();
+        return;
+      }
+      if (data.type !== "hexagon:preview:height" || data.slug !== slug) return;
+      if (typeof data.height !== "number" || !Number.isFinite(data.height) || data.height <= 0) return;
+      setMeasuredHeight(Math.min(Math.ceil(data.height), MAX_FRAME_HEIGHT));
+    }
+    function sendAppearance() {
+      iframeRef.current?.contentWindow?.postMessage(
+        { type: "hexagon:preview:appearance", themeId, radiusId },
+        "*",
+      );
     }
     window.addEventListener("message", onMessage);
     return () => window.removeEventListener("message", onMessage);
-  }, [slug]);
+    // We re-create the listener whenever theme/radius change so `sendAppearance`
+    // captures the latest values for the ready handshake. The dedicated
+    // appearance-broadcast effect below covers post-mount updates.
+  }, [slug, themeId, radiusId]);
 
-  const frameHeight = measuredHeight ?? previewHeight;
+  // When theme or radius changes after the iframe is loaded, broadcast the
+  // new appearance — the bridge inside the iframe applies it live.
+  useEffect(() => {
+    iframeRef.current?.contentWindow?.postMessage(
+      { type: "hexagon:preview:appearance", themeId, radiusId },
+      "*",
+    );
+  }, [themeId, radiusId]);
+
+  const frameHeight = Math.max(measuredHeight ?? previewHeight, minHeight ?? 0);
 
   return (
     <motion.section

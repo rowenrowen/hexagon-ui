@@ -34,6 +34,8 @@ export {
   type FooterSimpleProps,
   type FooterLink,
 } from "./footer-simple";
+export { FooterColumns, type FooterColumnsGroup, type FooterColumnsLink, type FooterColumnsProps } from "./footer-columns";
+export { FooterSitemap, type FooterSitemapProps } from "./footer-sitemap";
 export { BlockReveal, BlockRevealLi, BlockRevealSpan, BlockRevealTr } from "./block-reveal";
 export type { BlockRevealLiProps, BlockRevealTrProps } from "./block-reveal";
 
@@ -118,6 +120,7 @@ export {
   type NavSearchLink,
   type NavSearchProps,
 } from "./nav-search";
+export { NavMega, navMegaDefaults, type NavMegaLink, type NavMegaMenu, type NavMegaProps } from "./nav-mega";
 export {
   ContactSection,
   contactSectionDefaults,

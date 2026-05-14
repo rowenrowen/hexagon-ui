@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { BLOCK_SECTIONS } from "@/content/blocks-catalog";
+import { HUB_BLOCK_SECTIONS } from "@/content/blocks-catalog";
 
 /**
  * Desktop left rail: category links only — browsing stays obvious without extra cards.
@@ -17,7 +17,7 @@ export function BlocksSidebar({ className }: { className?: string }) {
     <nav aria-label="Block categories" className={className}>
       <p className="px-2 pb-3 text-[10px] font-semibold uppercase tracking-[0.16em] text-muted-foreground">Sections</p>
       <ul className="space-y-0.5">
-        {BLOCK_SECTIONS.map((section) => {
+        {HUB_BLOCK_SECTIONS.map((section) => {
           const active = activeSlug === section.slug;
           return (
             <li key={section.slug}>

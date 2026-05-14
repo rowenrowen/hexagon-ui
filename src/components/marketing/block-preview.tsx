@@ -17,6 +17,8 @@ import {
   FeatureGrid,
   FeaturePillsRow,
   FooterSimple,
+  FooterColumns,
+  FooterSitemap,
   HeroCompact,
   HeroMarketing,
   HeroSplit,
@@ -30,6 +32,7 @@ import {
   NavMarketing,
   NavPill,
   NavSearch,
+  NavMega,
   NewsletterInline,
   PartnerLogoGrid,
   PricingAddonRow,
@@ -96,6 +99,8 @@ export function BlockPreview({ slug }: { slug: string }) {
       );
     case "nav-search":
       return <NavSearch brandLabel="Beacon" />;
+    case "nav-mega":
+      return <NavMega />;
     case "announcement-bar":
       return <AnnouncementBar {...showcaseAnnouncement} />;
     case "hero-marketing":
@@ -227,6 +232,10 @@ export function BlockPreview({ slug }: { slug: string }) {
       return <FaqRating id={`faq-rating-${slug}`} />;
     case "footer-simple":
       return <FooterSimple brandName="Northwind" links={showcaseFooterLinks} />;
+    case "footer-columns":
+      return <FooterColumns />;
+    case "footer-sitemap":
+      return <FooterSitemap />;
     case "section-intro":
       return <SectionIntro />;
     case "card-stack-mini":

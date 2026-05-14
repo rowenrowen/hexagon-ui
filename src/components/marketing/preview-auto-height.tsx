@@ -3,23 +3,20 @@
 import { useEffect, useRef } from "react";
 
 /**
- * Reports the rendered content height of the iframe back to the gallery
- * parent so the frame can size itself exactly to the block.
+ * Sends **one** height measurement to the gallery parent after layout has
+ * settled (webfonts + window `load` + a couple animation frames).
  *
- * Mirrors how tailark / shadcnblocks size their showcase frames — iframes
- * are not allowed to scroll; the parent listens for height messages and
- * resizes the `<iframe>` element accordingly.
+ * Showcase sites like Tailark keep the outer preview chrome **fixed** while
+ * nav mega-menus and dropdowns float inside the iframe viewport. They do
+ * **not** resize the outer frame when a menu opens — that would jitter the
+ * whole `/blocks` page. We mirror that: no remeasuring on hover, pointer,
+ * focus, or overlay open/close.
  *
- * Triggers:
- *  - ResizeObserver on `<html>` + `<body>` for inline layout changes
- *  - `document.fonts.ready` once webfonts settle
- *  - A few scheduled measurements after pointer / focus interactions to
- *    catch absolutely-positioned UI (e.g. nav hover dropdowns) that don't
- *    grow the body box but do extend `scrollHeight`.
+ * ResizeObserver runs only until we finalize, so late images/fonts still
+ * bump `maxH` during the settle window; after finalize we disconnect.
  */
 export function PreviewAutoHeight({ slug }: { slug: string }) {
-  const lastReported = useRef(0);
-  const rafRef = useRef<number | null>(null);
+  const finalizedRef = useRef(false);
 
   useEffect(() => {
     if (typeof window === "undefined" || window.parent === window) return;
@@ -28,71 +25,58 @@ export function PreviewAutoHeight({ slug }: { slug: string }) {
     if (!target) return;
 
     function measure() {
-      if (!target) return 0;
-      // scrollHeight catches absolutely-positioned descendants (e.g. open
-      // hover dropdowns) that overflow their parent — offsetHeight wouldn't.
-      return Math.ceil(
-        Math.max(
-          target.scrollHeight,
-          target.getBoundingClientRect().height,
-        ),
-      );
+      return Math.ceil(Math.max(target!.scrollHeight, target!.getBoundingClientRect().height));
     }
 
-    function post() {
-      if (rafRef.current !== null) cancelAnimationFrame(rafRef.current);
-      rafRef.current = requestAnimationFrame(() => {
-        const h = measure();
-        if (h <= 0) return;
-        if (Math.abs(h - lastReported.current) < 1) return;
-        lastReported.current = h;
-        window.parent.postMessage(
-          { type: "hexagon:preview:height", slug, height: h },
-          "*",
-        );
-      });
+    let maxH = 0;
+
+    function record() {
+      if (finalizedRef.current) return;
+      const h = measure();
+      if (h > maxH) maxH = h;
     }
 
-    const scheduled: number[] = [];
-    function schedule() {
-      [60, 220, 600].forEach((d) => {
-        scheduled.push(window.setTimeout(post, d));
-      });
+    const ro = new ResizeObserver(() => {
+      record();
+    });
+
+    function finalize() {
+      if (finalizedRef.current) return;
+      finalizedRef.current = true;
+      ro.disconnect();
+      if (maxH <= 0) return;
+      window.parent.postMessage({ type: "hexagon:preview:height", slug, height: maxH }, "*");
     }
 
-    post();
-    const ro = new ResizeObserver(post);
+    record();
     ro.observe(target);
-    if (document.body) ro.observe(document.body);
 
-    if (document.fonts?.ready) {
-      document.fonts.ready.then(post).catch(() => {});
-    }
+    const waitFonts = document.fonts?.ready ?? Promise.resolve();
+    const waitLoad =
+      document.readyState === "complete"
+        ? Promise.resolve()
+        : new Promise<void>((resolve) => {
+            window.addEventListener("load", () => resolve(), { once: true });
+          });
 
-    const evs: (keyof DocumentEventMap)[] = [
-      "pointerdown",
-      "pointerup",
-      "mouseenter",
-      "mouseleave",
-      "focusin",
-      "focusout",
-      "transitionend",
-      "animationend",
-    ];
-    const onEvent = () => schedule();
-    evs.forEach((ev) =>
-      document.addEventListener(ev, onEvent, { passive: true, capture: true }),
-    );
+    void Promise.all([waitFonts, waitLoad]).then(() => {
+      setTimeout(() => {
+        record();
+        requestAnimationFrame(() => {
+          record();
+          requestAnimationFrame(() => {
+            record();
+            finalize();
+          });
+        });
+      }, 80);
+    });
 
-    schedule();
+    const safety = window.setTimeout(() => finalize(), 4000);
 
     return () => {
+      window.clearTimeout(safety);
       ro.disconnect();
-      evs.forEach((ev) =>
-        document.removeEventListener(ev, onEvent, { capture: true } as EventListenerOptions),
-      );
-      scheduled.forEach((id) => clearTimeout(id));
-      if (rafRef.current !== null) cancelAnimationFrame(rafRef.current);
     };
   }, [slug]);
 

@@ -49,7 +49,7 @@ export function IntegrationsRow({
               key={name}
               delay={i * 0.05}
               hoverLift
-              className="rounded-full border border-border bg-muted/30 px-4 py-2 text-sm font-medium text-card-foreground"
+              className="rounded-md border border-border bg-muted/30 px-4 py-2 text-sm font-medium text-card-foreground"
             >
               {name}
             </BlockRevealLi>

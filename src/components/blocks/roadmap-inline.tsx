@@ -1,3 +1,5 @@
+import { Fragment } from "react";
+
 export type RoadmapMilestone = { phase: string; title: string; window: string };
 
 export type RoadmapInlineProps = {
@@ -6,9 +8,9 @@ export type RoadmapInlineProps = {
 };
 
 export const roadmapInlineDefaults: RoadmapMilestone[] = [
-  { phase: "Now", title: "ZIP + README parity", window: "Shipped" },
-  { phase: "Next", title: "Motion polish pack", window: "Q3" },
-  { phase: "Later", title: "Figma companion", window: "Research" },
+  { phase: "Now", title: "Guided onboarding", window: "Live" },
+  { phase: "Next", title: "EU data residency", window: "Q3" },
+  { phase: "Later", title: "Fine-tuned industry models", window: "Roadmap" },
 ];
 
 export function RoadmapInline({
@@ -22,18 +24,26 @@ export function RoadmapInline({
         <p className="mt-2 max-w-xl text-sm text-muted-foreground">
           Lightweight timeline — swap milestones with your public changelog cadence.
         </p>
-        <ol className="mt-10 grid gap-4 sm:grid-cols-3">
+
+        <div className="mt-10 flex flex-col gap-4 sm:flex-row sm:items-stretch sm:gap-2">
           {milestones.map((m, i) => (
-            <li key={m.title} className="relative rounded-xl border border-border bg-card p-5">
-              <span className="text-[10px] font-bold uppercase tracking-wider text-primary">{m.phase}</span>
-              <p className="mt-2 font-semibold text-card-foreground">{m.title}</p>
-              <p className="mt-1 text-xs text-muted-foreground">{m.window}</p>
+            <Fragment key={m.title}>
+              <article className="min-w-0 flex-1 rounded-xl border border-border bg-card p-5 shadow-sm">
+                <span className="text-[10px] font-bold uppercase tracking-wider text-primary">{m.phase}</span>
+                <p className="mt-2 font-semibold text-card-foreground">{m.title}</p>
+                <p className="mt-1 text-xs text-muted-foreground">{m.window}</p>
+              </article>
               {i < milestones.length - 1 ? (
-                <span className="absolute -right-3 top-1/2 hidden h-px w-6 -translate-y-1/2 bg-border sm:block" aria-hidden />
+                <div
+                  aria-hidden
+                  className="flex shrink-0 items-center justify-center py-2 sm:w-12 sm:self-stretch sm:py-0"
+                >
+                  <div className="h-px w-full max-w-[5rem] rounded-full bg-gradient-to-r from-border via-primary/40 to-border sm:max-w-none" />
+                </div>
               ) : null}
-            </li>
+            </Fragment>
           ))}
-        </ol>
+        </div>
       </div>
     </section>
   );
