@@ -7,7 +7,8 @@ import { PreviewAppearancePanel } from "@/components/marketing/preview-controls"
 import { HUB_BLOCK_SECTIONS } from "@/content/blocks-catalog";
 
 /**
- * Mobile `/blocks/*`: one horizontal row of category pills; preview tuning lives in a collapsible panel.
+ * Mobile `/blocks/*`: horizontal section **tabs** (underline active) — visually
+ * distinct from the main header’s pill buttons above.
  */
 export function BlocksMobileNav() {
   const pathname = usePathname();
@@ -17,8 +18,8 @@ export function BlocksMobileNav() {
 
   return (
     <div className="sticky top-14 z-20 border-b border-border/70 bg-background/95 backdrop-blur-lg lg:hidden">
-      <nav aria-label="Categories" className="px-3 pt-2">
-        <div className="flex gap-2 overflow-x-auto pb-3 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+      <nav aria-label="Block categories" className="px-1 pt-1">
+        <div className="flex gap-0 overflow-x-auto border-b border-border/60 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
           {HUB_BLOCK_SECTIONS.map((section) => {
             const active = activeSlug === section.slug;
             return (
@@ -26,10 +27,11 @@ export function BlocksMobileNav() {
                 key={section.slug}
                 href={`/blocks/${section.slug}`}
                 scroll={false}
+                aria-current={active ? "page" : undefined}
                 className={
                   active
-                    ? "inline-flex h-11 shrink-0 items-center rounded-full bg-primary px-5 text-sm font-semibold text-primary-foreground"
-                    : "inline-flex h-11 shrink-0 items-center rounded-full border border-border/80 bg-card px-5 text-sm font-medium text-muted-foreground transition-colors hover:border-border hover:text-foreground active:bg-muted/40"
+                    ? "-mb-px shrink-0 border-b-2 border-primary px-3 py-2.5 text-sm font-semibold text-foreground transition-colors"
+                    : "-mb-px shrink-0 border-b-2 border-transparent px-3 py-2.5 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
                 }
               >
                 {section.title}
