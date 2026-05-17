@@ -1,3 +1,5 @@
+import { KIT_PRIMARY_PILL } from "@/lib/kit-button-classes";
+import { KIT_FIELD_INPUT } from "@/lib/kit-field-classes";
 import { PreviewForm } from "./preview-form";
 
 export type SignupStripProps = {
@@ -26,12 +28,9 @@ export function SignupStrip({
             name="email"
             type="email"
             placeholder={placeholder}
-            className="min-w-0 flex-1 rounded-full border border-border bg-background px-4 py-2.5 text-sm outline-none ring-ring focus-visible:ring-2"
+            className={KIT_FIELD_INPUT}
           />
-          <button
-            type="submit"
-            className="shrink-0 rounded-full bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground hover:opacity-90"
-          >
+          <button type="submit" className={`shrink-0 ${KIT_PRIMARY_PILL}`}>
             {buttonLabel}
           </button>
         </PreviewForm>

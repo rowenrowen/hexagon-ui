@@ -1,7 +1,8 @@
-Place your free starter archive here as:
+Generate the free starter archive:
 
-  hexagon-ui-free-starter.zip
+  npm run kit:zip:free
 
+This writes public/downloads/hexagon-ui-free-starter.zip (gitignored if listed).
 The site links to /downloads/hexagon-ui-free-starter.zip by default.
 Override with NEXT_PUBLIC_FREE_STARTER_DOWNLOAD_URL if you host the file elsewhere (e.g. CDN).
 

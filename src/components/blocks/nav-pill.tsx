@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { ArrowRight, Hexagon, Menu, X } from "lucide-react";
+import { KIT_PRIMARY_PILL, KIT_PRIMARY_PILL_BLOCK } from "@/lib/kit-button-classes";
 import { MarketingLink } from "./marketing-link";
 
 export type NavPillLink = { href: string; label: string };
@@ -87,7 +88,7 @@ export function NavPill({
             >
               <MarketingLink
                 href={cta.href}
-                className="inline-flex h-9 items-center gap-1.5 rounded-full bg-primary px-3.5 text-[13px] font-semibold text-primary-foreground shadow-[0_4px_14px_-6px_oklch(var(--primary)/0.6)] transition-shadow hover:shadow-[0_6px_18px_-6px_oklch(var(--primary)/0.7)]"
+                className={`${KIT_PRIMARY_PILL} h-9 gap-1.5 px-3.5 text-[13px] shadow-[0_4px_14px_-6px_oklch(var(--primary)/0.6)]`}
               >
                 {cta.label}
                 <ArrowRight className="size-3.5" strokeWidth={2.5} aria-hidden />
@@ -147,7 +148,7 @@ export function NavPill({
                 >
                   <MarketingLink
                     href={cta.href}
-                    className="flex h-11 items-center justify-center gap-1.5 rounded-full bg-primary text-sm font-semibold text-primary-foreground"
+                    className={`flex h-11 items-center justify-center gap-1.5 ${KIT_PRIMARY_PILL_BLOCK}`}
                     onClick={() => setMobileOpen(false)}
                   >
                     {cta.label}

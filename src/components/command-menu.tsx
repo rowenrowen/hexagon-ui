@@ -26,7 +26,10 @@ import {
 import { useTheme } from "next-themes";
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect } from "react";
+import { getBlockSearchEntries } from "@/content/block-search";
 import { FREE_STARTER_DOWNLOAD_URL } from "@/lib/checkout-url";
+
+const blockSearchEntries = getBlockSearchEntries();
 
 const gumroadUrl = process.env.NEXT_PUBLIC_GUMROAD_PRODUCT_URL;
 
@@ -80,15 +83,15 @@ export function CommandMenu({ open, onOpenChange }: CommandMenuProps) {
             Search pages, jump to routes, open checkout, and switch light or dark appearance.
           </Dialog.Description>
 
-          <Command label="Site navigation" shouldFilter loop={false}>
+          <Command label="Site navigation" shouldFilter>
             <div className="flex items-center gap-2 border-b border-border px-3">
               <Search className="size-4 shrink-0 text-muted-foreground" aria-hidden />
               <CommandInput
-                placeholder="Search pages and actions…"
+                placeholder="Search pages, blocks, and actions…"
                 className="flex h-12 w-full bg-transparent py-3 text-sm outline-none placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50"
               />
             </div>
-            <CommandList className="max-h-[min(60vh,320px)] overflow-y-auto p-2">
+            <CommandList className="max-h-[min(70vh,420px)] overflow-y-auto p-2">
               <CommandEmpty className="py-6 text-center text-sm text-muted-foreground">No matches.</CommandEmpty>
 
               <CommandGroup heading="Pages">
@@ -146,6 +149,28 @@ export function CommandMenu({ open, onOpenChange }: CommandMenuProps) {
                   <HelpCircle className="size-4 text-muted-foreground" aria-hidden />
                   FAQ on homepage
                 </CommandItem>
+              </CommandGroup>
+
+              <CommandSeparator className="my-2 h-px bg-border" />
+
+              <CommandGroup heading="Blocks">
+                {blockSearchEntries.map((entry) => (
+                  <CommandItem
+                    key={entry.slug}
+                    value={entry.value}
+                    keywords={entry.keywords}
+                    onSelect={() => go(entry.href)}
+                    className="flex cursor-pointer flex-col items-start gap-0.5 rounded-lg px-2 py-2 text-sm aria-selected:bg-muted"
+                  >
+                    <span className="flex w-full items-center gap-2 font-medium text-foreground">
+                      <LayoutGrid className="size-4 shrink-0 text-muted-foreground" aria-hidden />
+                      {entry.frameTitle}
+                    </span>
+                    <span className="pl-6 text-xs text-muted-foreground">
+                      {entry.sectionTitle} · {entry.slug}
+                    </span>
+                  </CommandItem>
+                ))}
               </CommandGroup>
 
               <CommandSeparator className="my-2 h-px bg-border" />

@@ -1,3 +1,4 @@
+import { KIT_PRIMARY_PILL } from "@/lib/kit-button-classes";
 import { MarketingLink } from "./marketing-link";
 
 export type CtaMinimalBarProps = {
@@ -17,7 +18,7 @@ export function CtaMinimalBar({
     <section className={`border-y border-border bg-muted/25 py-6 ${className ?? ""}`}>
       <div className="site-grid flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">
         <p className="text-sm font-medium text-foreground">{text}</p>
-        <MarketingLink href={href} className="rounded-full bg-foreground px-4 py-2 text-sm font-semibold text-background hover:opacity-90">
+        <MarketingLink href={href} className={KIT_PRIMARY_PILL}>
           {label}
         </MarketingLink>
       </div>

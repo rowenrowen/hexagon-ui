@@ -2,6 +2,7 @@
 
 import { motion, useReducedMotion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
+import { KIT_PRIMARY_PILL, KIT_SECONDARY_PILL } from "@/lib/kit-button-classes";
 import { MarketingLink } from "./marketing-link";
 import { MarketingContainer } from "@/components/layout/marketing-container";
 
@@ -87,7 +88,7 @@ export function HeroMarketing(props: Partial<HeroMarketingProps> = {}) {
           <motion.div whileHover={reduceMotion ? undefined : { y: -2 }} whileTap={reduceMotion ? undefined : { scale: 0.985 }}>
             <MarketingLink
               href={p.primaryCta.href}
-              className="group inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground shadow-sm transition-shadow hover:shadow-md"
+              className={`group ${KIT_PRIMARY_PILL} px-6 py-3`}
             >
               {p.primaryCta.label}
               <motion.span
@@ -103,7 +104,7 @@ export function HeroMarketing(props: Partial<HeroMarketingProps> = {}) {
             <motion.div whileHover={reduceMotion ? undefined : { y: -1 }} whileTap={reduceMotion ? undefined : { scale: 0.99 }}>
               <MarketingLink
                 href={p.secondaryCta.href}
-                className="inline-flex items-center rounded-full border border-border/80 bg-card/70 px-4 py-2 text-sm font-medium text-muted-foreground backdrop-blur transition-colors hover:border-primary/35 hover:text-foreground"
+                className={`${KIT_SECONDARY_PILL} px-4 py-2`}
               >
                 {p.secondaryCta.label}
               </MarketingLink>

@@ -121,11 +121,7 @@ export {
   type NavSearchProps,
 } from "./nav-search";
 export { NavMega, navMegaDefaults, type NavMegaLink, type NavMegaMenu, type NavMegaProps } from "./nav-mega";
-export {
-  ContactSection,
-  contactSectionDefaults,
-  type ContactSectionProps,
-} from "./contact-section";
+export { ContactSection, type ContactLane, type ContactSectionProps } from "./contact-section";
 export {
   AuthLoginMarketing,
   authLoginMarketingDefaults,
@@ -148,6 +144,8 @@ export {
   type MarketingTabItem,
   type TabsMarketingProps,
 } from "./tabs-marketing";
+export { MarketingTabsShell, type MarketingTabsShellProps } from "./marketing-tabs-shell";
+export { MarketingTabList, MarketingTabPanel, type MarketingTabOption } from "./marketing-tab-controls";
 export {
   FaqRating,
   faqRatingDefaults,

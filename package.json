@@ -14,7 +14,8 @@
     "lint": "eslint",
     "gumroad:images": "node scripts/export-gumroad-sizes.mjs",
     "kit:sync": "node scripts/sync-kit.mjs",
-    "kit:zip": "npm run kit:sync && node scripts/zip-kit.mjs"
+    "kit:zip": "npm run kit:sync && node scripts/zip-kit.mjs",
+    "kit:zip:free": "node scripts/zip-free-starter.mjs"
   },
   "dependencies": {
     "@radix-ui/react-dialog": "^1.1.15",

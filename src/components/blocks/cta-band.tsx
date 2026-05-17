@@ -3,6 +3,7 @@
 import { ArrowRight } from "lucide-react";
 import { motion, useReducedMotion } from "framer-motion";
 import { MarketingContainer } from "@/components/layout/marketing-container";
+import { KIT_PRIMARY_PILL, KIT_SECONDARY_PILL } from "@/lib/kit-button-classes";
 import { MarketingLink } from "./marketing-link";
 
 export type CtaBandProps = {
@@ -51,7 +52,7 @@ export function CtaBand(props: Partial<CtaBandProps> = {}) {
               <motion.div whileHover={reduceMotion ? undefined : { y: -2 }} whileTap={reduceMotion ? undefined : { scale: 0.985 }}>
                 <MarketingLink
                   href={p.primaryCta.href}
-                  className="inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground shadow-sm transition-[background-color,box-shadow,transform] hover:bg-primary/90 hover:shadow-md active:scale-[0.98]"
+                  className={`${KIT_PRIMARY_PILL} px-6 py-3`}
                 >
                   {p.primaryCta.label}
                   <motion.span
@@ -67,7 +68,7 @@ export function CtaBand(props: Partial<CtaBandProps> = {}) {
                 <motion.div whileHover={reduceMotion ? undefined : { y: -1 }} whileTap={reduceMotion ? undefined : { scale: 0.99 }}>
                   <MarketingLink
                     href={p.secondaryCta.href}
-                    className="rounded-full border border-border bg-background/70 px-5 py-3 text-sm font-medium text-foreground backdrop-blur transition-colors hover:bg-muted"
+                    className={`${KIT_SECONDARY_PILL} px-5 py-3 text-foreground`}
                   >
                     {p.secondaryCta.label}
                   </MarketingLink>

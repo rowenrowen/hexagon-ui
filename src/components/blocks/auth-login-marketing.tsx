@@ -1,5 +1,7 @@
 "use client";
 
+import { KIT_PRIMARY_PILL_BLOCK } from "@/lib/kit-button-classes";
+import { KIT_FIELD_INPUT } from "@/lib/kit-field-classes";
 import { BlockReveal } from "./block-reveal";
 import { MarketingLink } from "./marketing-link";
 
@@ -42,7 +44,7 @@ export function AuthLoginMarketing(props: Partial<AuthLoginMarketingProps> = {})
                   name="email"
                   type="email"
                   autoComplete="email"
-                  className="mt-1.5 w-full rounded-xl border border-border bg-background px-3 py-2.5 text-sm outline-none ring-primary/25 focus:ring-2"
+                  className={`mt-1.5 w-full ${KIT_FIELD_INPUT}`}
                 />
               </div>
               <div>
@@ -54,12 +56,12 @@ export function AuthLoginMarketing(props: Partial<AuthLoginMarketingProps> = {})
                   name="password"
                   type="password"
                   autoComplete="current-password"
-                  className="mt-1.5 w-full rounded-xl border border-border bg-background px-3 py-2.5 text-sm outline-none ring-primary/25 focus:ring-2"
+                  className={`mt-1.5 w-full ${KIT_FIELD_INPUT}`}
                 />
               </div>
               <button
                 type="submit"
-                className="w-full rounded-xl bg-primary py-3 text-sm font-semibold text-primary-foreground transition-opacity hover:opacity-90"
+                className={KIT_PRIMARY_PILL_BLOCK}
               >
                 Continue
               </button>

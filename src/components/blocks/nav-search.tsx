@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { Hexagon, Menu, Search, X } from "lucide-react";
+import { KIT_PRIMARY_PILL_BLOCK, KIT_PRIMARY_PILL_COMPACT } from "@/lib/kit-button-classes";
 import { MarketingLink } from "./marketing-link";
 
 export type NavSearchLink = { href: string; label: string };
@@ -123,7 +124,7 @@ export function NavSearch({
           <motion.div whileHover={reduceMotion ? undefined : { y: -1 }} whileTap={reduceMotion ? undefined : { scale: 0.985 }}>
             <MarketingLink
               href={cta.href}
-              className="inline-flex h-9 items-center rounded-lg bg-primary px-3.5 text-sm font-semibold text-primary-foreground transition-shadow hover:shadow-md"
+              className={`${KIT_PRIMARY_PILL_COMPACT} h-9 rounded-lg px-3.5`}
             >
               {cta.label}
             </MarketingLink>
@@ -182,7 +183,7 @@ export function NavSearch({
               >
                 <MarketingLink
                   href={cta.href}
-                  className="flex h-11 items-center justify-center rounded-lg bg-primary text-sm font-semibold text-primary-foreground"
+                  className={`flex h-11 items-center justify-center ${KIT_PRIMARY_PILL_BLOCK} rounded-lg`}
                   onClick={() => setMobileOpen(false)}
                 >
                   {cta.label}

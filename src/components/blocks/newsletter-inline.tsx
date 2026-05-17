@@ -1,4 +1,6 @@
 import { Mail } from "lucide-react";
+import { KIT_PRIMARY_PILL } from "@/lib/kit-button-classes";
+import { KIT_FIELD_INPUT } from "@/lib/kit-field-classes";
 import { BlockReveal } from "./block-reveal";
 import { PreviewForm } from "./preview-form";
 
@@ -46,12 +48,9 @@ export function NewsletterInline(props: Partial<NewsletterInlineProps> = {}) {
                 type="email"
                 autoComplete="email"
                 placeholder={p.placeholder}
-                className="min-h-11 flex-1 rounded-xl border border-border bg-background px-4 text-sm text-foreground outline-none ring-primary/30 placeholder:text-muted-foreground focus:ring-2"
+                className={`min-h-11 ${KIT_FIELD_INPUT}`}
               />
-              <button
-                type="submit"
-                className="min-h-11 shrink-0 rounded-xl bg-primary px-6 text-sm font-semibold text-primary-foreground transition-opacity hover:opacity-90"
-              >
+              <button type="submit" className={`min-h-11 shrink-0 ${KIT_PRIMARY_PILL} px-6`}>
                 {p.buttonLabel}
               </button>
             </PreviewForm>

@@ -177,8 +177,15 @@ body {
   --radius: 1rem;
 }
 
-/* Let radius controls visibly affect interactive controls in previews. */
-.preview-theme-scope :is(button, a, [role="button"], input[type="button"], input[type="submit"], input[type="reset"]) {
+/* Let radius controls visibly affect interactive controls and fields in previews. */
+.preview-theme-scope :is(
+  button,
+  a,
+  [role="button"],
+  input:not([type="checkbox"]):not([type="radio"]),
+  textarea,
+  select
+) {
   border-radius: var(--radius-xl);
 }
 

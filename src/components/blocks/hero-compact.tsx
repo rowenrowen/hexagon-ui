@@ -1,3 +1,4 @@
+import { KIT_PRIMARY_PILL } from "@/lib/kit-button-classes";
 import { MarketingLink } from "./marketing-link";
 
 export type HeroCompactProps = {
@@ -22,7 +23,7 @@ export function HeroCompact(props: Partial<HeroCompactProps> = {}) {
         <p className="mx-auto mt-4 max-w-xl text-muted-foreground">{p.sub}</p>
         <MarketingLink
           href={p.cta.href}
-          className="mt-8 inline-flex rounded-full bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground hover:opacity-90"
+          className={`mt-8 ${KIT_PRIMARY_PILL} px-6 py-3`}
         >
           {p.cta.label}
         </MarketingLink>

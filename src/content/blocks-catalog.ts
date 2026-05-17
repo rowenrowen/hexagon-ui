@@ -5,18 +5,11 @@ export type BlockEntry = {
   file: string;
   frameTitle: string;
   frameDescription: string;
-  /**
-   * Initial iframe height (px). Shown before the iframe reports its settled
-   * content height. Used to prevent CLS — the iframe ends up sized to the
-   * measured block height, not this value.
-   */
+  /** Fixed desktop preview viewport height (px). */
   previewHeight?: number;
-  /**
-   * Optional **minimum** iframe height (px). Useful only for blocks with
-   * floating overlays that must remain inside the iframe viewport (e.g. nav
-   * dropdowns). Leave unset for normal blocks so the iframe sizes tight to
-   * content.
-   */
+  /** Fixed mobile preview viewport height (px). */
+  previewHeightMobile?: number;
+  /** Optional desktop floor when larger than `previewHeight` (legacy nav blocks). */
   minHeight?: number;
 };
 
@@ -38,40 +31,45 @@ export const BLOCK_SECTIONS: BlockSectionMeta[] = [
         file: "nav-marketing.tsx",
         frameTitle: "NavMarketing",
         frameDescription: "Classic split bar with hover dropdowns and a primary CTA.",
-        previewHeight: 380,
-        minHeight: 380, // room for open dropdown menu inside the viewport
+        previewHeight: 420,
+        previewHeightMobile: 540,
+        minHeight: 420,
       },
       {
         slug: "nav-centered",
         file: "nav-centered.tsx",
         frameTitle: "NavCentered",
         frameDescription: "Centered wordmark flanked by split nav rails — editorial / brand-led.",
-        previewHeight: 240,
-        minHeight: 240, // room for open mobile drawer
+        previewHeight: 280,
+        previewHeightMobile: 480,
+        minHeight: 280,
       },
       {
         slug: "nav-pill",
         file: "nav-pill.tsx",
         frameTitle: "NavPill",
         frameDescription: "True floating capsule with hero backdrop — overlays product art.",
-        previewHeight: 320,
-        minHeight: 320, // room for open mobile popover + hero gradient
+        previewHeight: 360,
+        previewHeightMobile: 500,
+        minHeight: 360,
       },
       {
         slug: "nav-search",
         file: "nav-search.tsx",
         frameTitle: "NavSearch",
         frameDescription: "Docs-style bar with a prominent ⌘K search input and dense actions.",
-        previewHeight: 240,
-        minHeight: 240, // room for open mobile drawer
+        previewHeight: 280,
+        previewHeightMobile: 480,
+        minHeight: 280,
       },
       {
         slug: "nav-mega",
         file: "nav-mega.tsx",
         frameTitle: "NavMega",
         frameDescription: "Content-rich header — mega panels with icons, featured rail, dual CTAs.",
-        previewHeight: 320,
-        minHeight: 440,
+        previewHeight: 480,
+        previewHeightMobile: 600,
+        minHeight: 480,
       },
     ],
   },
@@ -99,7 +97,8 @@ export const BLOCK_SECTIONS: BlockSectionMeta[] = [
         file: "hero-split.tsx",
         frameTitle: "HeroSplit",
         frameDescription: "Split hero — copy lane + visual placeholder for screenshots or video.",
-        previewHeight: 600,
+        previewHeight: 640,
+        previewHeightMobile: 720,
       },
       {
         slug: "hero-compact",
@@ -120,7 +119,8 @@ export const BLOCK_SECTIONS: BlockSectionMeta[] = [
         file: "trust-strip.tsx",
         frameTitle: "TrustStrip",
         frameDescription: "Icon row with short credibility labels.",
-        previewHeight: 220,
+        previewHeight: 200,
+        previewHeightMobile: 300,
       },
       {
         slug: "logo-cloud",
@@ -231,7 +231,7 @@ export const BLOCK_SECTIONS: BlockSectionMeta[] = [
         slug: "integrations-row",
         file: "integrations-row.tsx",
         frameTitle: "IntegrationsRow",
-        frameDescription: "Stack / API pills for “works with” rows.",
+        frameDescription: "Tabbed integration groups with spring pill — Developer / Data / GTM lanes.",
         previewHeight: 260,
       },
       {
@@ -315,7 +315,7 @@ export const BLOCK_SECTIONS: BlockSectionMeta[] = [
         slug: "contact-section",
         file: "contact-section.tsx",
         frameTitle: "ContactSection",
-        frameDescription: "Split layout — details + accessible form.",
+        frameDescription: "Sales / Support / Partners tabs with lane-specific copy and form shell.",
         previewHeight: 700,
       },
       {
@@ -351,7 +351,7 @@ export const BLOCK_SECTIONS: BlockSectionMeta[] = [
         file: "pricing-dual.tsx",
         frameTitle: "PricingDual",
         frameDescription: "Two-column SaaS-style comparison — emphasize featured tier.",
-        previewHeight: 700,
+        previewHeight: 560,
       },
       {
         slug: "pricing-three-tier",
@@ -413,7 +413,7 @@ export const BLOCK_SECTIONS: BlockSectionMeta[] = [
         slug: "tabs-marketing",
         file: "tabs-marketing.tsx",
         frameTitle: "TabsMarketing",
-        frameDescription: "Segmented tabs + spring pill + cross-fading panels — client motion.",
+        frameDescription: "Segmented tabs + spring pill + cross-fading panels — reuse via marketing-tab-controls.",
         previewHeight: 580,
       },
       {
@@ -455,7 +455,7 @@ export const BLOCK_SECTIONS: BlockSectionMeta[] = [
         slug: "faq-accordion",
         file: "faq-accordion.tsx",
         frameTitle: "FaqAccordion",
-        frameDescription: "Spring-height disclosure + tap feedback — client Framer Motion.",
+        frameDescription: "Category tabs + spring-height accordions — flat list mode via items prop.",
         previewHeight: 580,
       },
       {

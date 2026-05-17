@@ -3,6 +3,7 @@
 import { Check } from "lucide-react";
 import { motion, useReducedMotion } from "framer-motion";
 import { MarketingContainer } from "@/components/layout/marketing-container";
+import { KIT_PRIMARY_PILL_BLOCK, KIT_SECONDARY_PILL_BLOCK } from "@/lib/kit-button-classes";
 import { MarketingLink } from "./marketing-link";
 
 export type PricingTier = {
@@ -116,11 +117,7 @@ export function PricingThreeTier({
               <motion.div className="mt-8" whileTap={reduceMotion ? undefined : { scale: 0.99 }}>
                 <MarketingLink
                   href={tier.ctaHref}
-                  className={`inline-flex w-full items-center justify-center rounded-full py-3 text-sm font-semibold transition-shadow hover:shadow-md ${
-                    tier.featured
-                      ? "bg-primary text-primary-foreground shadow-sm"
-                      : "border border-border bg-background text-foreground hover:bg-muted"
-                  }`}
+                  className={tier.featured ? KIT_PRIMARY_PILL_BLOCK : KIT_SECONDARY_PILL_BLOCK}
                 >
                   {tier.ctaLabel}
                 </MarketingLink>

@@ -1,4 +1,5 @@
 import { Check } from "lucide-react";
+import { KIT_PRIMARY_PILL_BLOCK, KIT_SECONDARY_PILL_BLOCK } from "@/lib/kit-button-classes";
 import { MarketingLink } from "./marketing-link";
 
 export type PricingDualTier = {
@@ -45,20 +46,24 @@ export function PricingDual({
   className,
 }: Partial<PricingDualProps> = {}) {
   return (
-    <section className={`py-20 ${className ?? ""}`}>
+    <section className={`py-16 sm:py-20 ${className ?? ""}`}>
       <div className="site-grid">
-        <h2 className="text-2xl font-semibold tracking-tight text-foreground sm:text-3xl">{title}</h2>
-        <p className="mt-3 max-w-2xl text-muted-foreground">{subtitle}</p>
-        <div className="mt-12 grid gap-6 lg:grid-cols-2">
+        <div className="mx-auto max-w-2xl text-center">
+          <h2 className="text-2xl font-semibold tracking-tight text-foreground sm:text-3xl">{title}</h2>
+          <p className="mt-3 text-muted-foreground">{subtitle}</p>
+        </div>
+        <ul className="mx-auto mt-10 grid max-w-4xl list-none gap-5 sm:grid-cols-2">
           {tiers.map((tier) => (
-            <div
+            <li
               key={tier.name}
-              className={`rounded-2xl border p-8 shadow-sm ${tier.emphasized ? "border-primary/45 bg-primary/5 shadow-md ring-1 ring-primary/15" : "border-border bg-card"}`}
+              className={`flex flex-col rounded-xl border p-6 shadow-sm ${
+                tier.emphasized ? "border-primary/45 bg-primary/5 shadow-md ring-1 ring-primary/15" : "border-border bg-card"
+              }`}
             >
               <p className="text-sm font-semibold uppercase tracking-wider text-primary">{tier.name}</p>
-              <p className="mt-3 text-4xl font-semibold text-card-foreground">{tier.price}</p>
+              <p className="mt-3 text-3xl font-semibold text-card-foreground">{tier.price}</p>
               {tier.hint ? <p className="mt-1 text-sm text-muted-foreground">{tier.hint}</p> : null}
-              <ul className="mt-8 space-y-3">
+              <ul className="mt-6 space-y-2.5">
                 {tier.bullets.map((b) => (
                   <li key={b} className="flex gap-2 text-sm text-card-foreground">
                     <Check className="size-4 shrink-0 text-primary" aria-hidden />
@@ -68,17 +73,13 @@ export function PricingDual({
               </ul>
               <MarketingLink
                 href={tier.ctaHref}
-                className={`mt-8 inline-flex w-full items-center justify-center rounded-full py-3 text-sm font-semibold ${
-                  tier.emphasized
-                    ? "bg-primary text-primary-foreground hover:opacity-90"
-                    : "border border-border bg-background hover:bg-muted"
-                }`}
+                className={`mt-8 ${tier.emphasized ? KIT_PRIMARY_PILL_BLOCK : KIT_SECONDARY_PILL_BLOCK}`}
               >
                 {tier.ctaLabel}
               </MarketingLink>
-            </div>
+            </li>
           ))}
-        </div>
+        </ul>
       </div>
     </section>
   );

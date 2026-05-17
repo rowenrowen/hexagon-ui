@@ -3,6 +3,7 @@
 import { Check } from "lucide-react";
 import { motion, useReducedMotion } from "framer-motion";
 import { MarketingContainer } from "@/components/layout/marketing-container";
+import { KIT_PRIMARY_PILL_BLOCK } from "@/lib/kit-button-classes";
 import { MarketingLink } from "./marketing-link";
 
 export type PricingSingleProps = {
@@ -83,7 +84,7 @@ export function PricingSingle(props: PricingSingleProps) {
           <motion.div className="mt-10" whileTap={reduceMotion ? undefined : { scale: 0.99 }}>
             <MarketingLink
               href={p.checkoutHref}
-              className="flex w-full items-center justify-center rounded-full bg-primary py-3 text-sm font-semibold text-primary-foreground shadow-sm transition-shadow hover:shadow-md"
+              className={KIT_PRIMARY_PILL_BLOCK}
             >
               {p.checkoutLabel ?? "Checkout"}
             </MarketingLink>

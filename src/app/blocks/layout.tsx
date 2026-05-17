@@ -23,7 +23,7 @@ export default function BlocksLayout({ children }: { children: ReactNode }) {
             <BlocksSidebar />
           </aside>
 
-          <main className="min-w-0 flex-1 px-4 py-6 sm:px-6 lg:px-8 lg:py-10">{children}</main>
+          <main className="site-grid min-w-0 flex-1 py-6 lg:py-10">{children}</main>
 
           <aside className="sticky top-14 hidden h-[calc(100dvh-3.5rem)] w-52 shrink-0 self-start overflow-y-auto border-l border-border/50 py-8 pl-5 lg:block xl:w-56">
             <PreviewAppearancePanel layout="sidebar" />

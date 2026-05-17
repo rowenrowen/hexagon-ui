@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { Hexagon, Menu, X } from "lucide-react";
+import { KIT_PRIMARY_PILL_COMPACT, KIT_PRIMARY_PILL_BLOCK } from "@/lib/kit-button-classes";
 import { MarketingLink } from "./marketing-link";
 
 export type NavCenteredLink = { href: string; label: string };
@@ -89,7 +90,7 @@ export function NavCentered({
           >
             <MarketingLink
               href={cta.href}
-              className="ml-2 inline-flex rounded-full bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground shadow-sm transition-shadow hover:shadow-md"
+              className={`ml-2 ${KIT_PRIMARY_PILL_COMPACT}`}
             >
               {cta.label}
             </MarketingLink>
@@ -147,7 +148,7 @@ export function NavCentered({
               >
                 <MarketingLink
                   href={cta.href}
-                  className="mt-2 block rounded-full bg-primary py-2.5 text-center text-sm font-semibold text-primary-foreground"
+                  className={`mt-2 ${KIT_PRIMARY_PILL_BLOCK}`}
                   onClick={() => setMobileOpen(false)}
                 >
                   {cta.label}

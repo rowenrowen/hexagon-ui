@@ -50,7 +50,7 @@ export default async function PreviewBlockPage({ params, searchParams }: PagePro
     <>
       <style>{`
 nextjs-portal{display:none!important}
-html,body{margin:0;overflow:hidden;background:var(--background)}
+html,body{margin:0;overflow-x:hidden;overflow-y:auto;height:100%;background:var(--background)}
 /* Suppress the trailing block divider that ships on every block's outer
    section — useful when stacking on a real page, distracting in isolation. */
 #hexagon-preview-content > *{border-bottom-color:transparent!important;border-bottom-width:0!important}

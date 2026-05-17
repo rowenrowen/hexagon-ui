@@ -19,10 +19,12 @@ export function CategorySection({ section }: CategorySectionProps) {
           key={b.slug}
           slug={b.slug}
           path={b.file}
-          name={`${b.frameTitle} · ${b.frameDescription}`}
+          frameTitle={b.frameTitle}
+          frameDescription={b.frameDescription}
           id={b.slug}
           includedInFreeStarter={FREE_BLOCK_SLUG_SET.has(b.slug)}
           previewHeight={b.previewHeight}
+          previewHeightMobile={b.previewHeightMobile}
           minHeight={b.minHeight}
         />
       ))}

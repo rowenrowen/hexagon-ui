@@ -19,19 +19,19 @@ export type TrustStripProps = {
 
 export function TrustStrip({ items = trustStripDefaults, className }: TrustStripProps) {
   return (
-    <section className={`border-b border-border bg-card/40 py-10 ${className ?? ""}`}>
+    <section className={`border-b border-border bg-card/40 py-10 sm:py-12 ${className ?? ""}`}>
       <MarketingContainer>
-        <ul
-          className="mx-auto grid max-w-4xl grid-cols-2 gap-x-6 gap-y-4 text-sm text-muted-foreground sm:grid-cols-4 sm:gap-x-8"
-        >
+        <ul className="mx-auto flex max-w-4xl flex-col gap-4 sm:grid sm:grid-cols-2 sm:gap-x-8 sm:gap-y-5 lg:grid-cols-4">
           {items.map(({ icon: Icon, label }, i) => (
-            <li key={label} className="flex items-center justify-center sm:justify-start">
+            <li key={label}>
               <BlockRevealSpan
                 delay={i * 0.05}
-                className="inline-flex items-center gap-2 text-center font-medium sm:text-left"
+                className="inline-flex w-full items-center gap-3 text-sm font-medium text-muted-foreground"
               >
-                <Icon className="size-4 shrink-0 text-primary" strokeWidth={1.75} aria-hidden />
-                <span>{label}</span>
+                <span className="inline-flex size-9 shrink-0 items-center justify-center rounded-lg border border-border/80 bg-background/80 text-primary shadow-sm">
+                  <Icon className="size-4" strokeWidth={1.75} aria-hidden />
+                </span>
+                <span className="text-pretty leading-snug">{label}</span>
               </BlockRevealSpan>
             </li>
           ))}

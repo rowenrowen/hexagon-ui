@@ -57,7 +57,7 @@ export function PreviewAppearancePanel({ layout, className }: PreviewAppearanceP
 
   if (layout === "mobile") {
     return (
-      <div className={`bg-muted/[0.06] px-3 pb-3 pt-1 ${className ?? ""}`}>
+      <div className={`bg-muted/[0.06] pb-4 pt-1 ${className ?? ""}`}>
         <div
           role="radiogroup"
           aria-label="Theme"
